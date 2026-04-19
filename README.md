@@ -1,4 +1,4 @@
-# Plant Disease Recognition System
+# Agro-Vision
 
 AI-assisted plant disease recognition project focused on image-based crop health assessment.
 
