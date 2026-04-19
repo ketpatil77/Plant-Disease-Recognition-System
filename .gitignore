@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+.venv-linux/
+venv/
+env/
+
+logs/
+backups/
+uploadimages/
+
+reports.db
+python_installer.exe

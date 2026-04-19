@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="mr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+        content="मशीन लर्निंगच्या मदतीने बहुपीक रोग ओळख, पोषण कमतरता निरीक्षण आणि शिफारसी देणारे अॅग्रो व्हिजन."
+        data-i18n-content="app.description" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0d1117" id="themeColorMeta" />
+  <title data-i18n="app.title">मशीन लर्निंग आधारित बहुपीक रोग ओळख व पोषण कमतरता मार्गदर्शन (अॅग्रो व्हिजन)</title>
+
+  <!-- Anti-flash: apply stored theme before first paint -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('agro-theme');
+      var el = document.documentElement;
+      if (t === 'light' || t === 'dark') {
+        el.dataset.theme = t;
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        el.dataset.theme = 'light';
+      }
+      // Sync theme-color meta
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('themeColorMeta');
+        if (meta) meta.content = el.dataset.theme === 'light' ? '#f2f5fa' : '#0d1117';
+      });
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+
+  <!-- Core scripts (non-module, run before body) -->
+  <script>
+    // Expose early so inline scripts can use it
+    window._themeInit = true;
+  </script>
+</head>
+<body class="app-shell">
+  <a class="skip-link" href="#main-content" data-i18n="app.skip_to_content">मुख्य मजकुराकडे जा</a>
+
+  <!-- Ambient background (dark mode only) -->
+  <div class="app-aurora" aria-hidden="true"></div>
+
+  <!-- ================================================================
+       HEADER
+       ================================================================ -->
+  <header class="app-header">
+    <a class="brand-block"
+       href="{{ url_for('home') }}"
+       data-i18n-aria="app.home">
+      <div class="logo" aria-hidden="true">🌿</div>
+      <div class="brand-text">
+        <div class="brand-title" data-i18n="app.title">मशीन लर्निंग आधारित बहुपीक रोग ओळख व पोषण कमतरता मार्गदर्शन (अॅग्रो व्हिजन)</div>
+        <div class="brand-sub"  data-i18n="app.tagline">अॅग्रो व्हिजन</div>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <!-- Language pill -->
+      <div class="lang-toggle" role="group" data-i18n-aria="app.language">
+        <button type="button" class="lang-btn" data-lang="mr" aria-label="मराठी">मराठी</button>
+        <button type="button" class="lang-btn" data-lang="en" data-i18n-aria="settings.language.english">इंग्रजी</button>
+      </div>
+
+      <!-- Theme toggle -->
+      <button type="button"
+              class="icon-btn"
+              data-theme-toggle
+              data-i18n-aria="app.theme.switch_light"
+              data-i18n-title="app.theme.switch_light">
+        <span class="icon-sun"  aria-hidden="true">☀️</span>
+        <span class="icon-moon" aria-hidden="true">🌙</span>
+      </button>
+
+      <!-- Help -->
+      <a class="icon-btn"
+         href="{{ url_for('settings') }}#help"
+         data-i18n-aria="app.help"
+         data-i18n-title="sidebar.help">?</a>
+
+      <!-- Mobile hamburger -->
+      <button type="button" class="sidebar-toggle"
+              data-i18n-aria="app.open_navigation"
+              aria-expanded="false" aria-controls="appSidebar">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       BODY
+       ================================================================ -->
+  <div class="app-body">
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- ============================================================
+         SIDEBAR
+         ============================================================ -->
+    <aside class="app-sidebar" id="appSidebar" data-i18n-aria="app.main_navigation">
+      <div class="sidebar-brand">
+        <div class="logo" style="width:28px;height:28px;font-size:0.9rem;" aria-hidden="true">🌿</div>
+        <div>
+          <strong data-i18n="app.title">मशीन लर्निंग आधारित बहुपीक रोग ओळख व पोषण कमतरता मार्गदर्शन (अॅग्रो व्हिजन)</strong>
+          <small  data-i18n="app.tagline">अॅग्रो व्हिजन</small>
+        </div>
+      </div>
+
+      <!-- CORE -->
+      <div class="sidebar-group">
+        <span class="sidebar-label" data-i18n="sidebar.group.core">मुख्य</span>
+        <details open>
+          <summary data-i18n="sidebar.core">मुख्य नेव्हिगेशन</summary>
+          <a class="sidebar-link {{ 'is-active' if active_page == 'home'    else '' }}" href="{{ url_for('home')    }}" {% if active_page == 'home' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">🏠</span><span data-i18n="nav.home">डॅशबोर्ड</span>
+          </a>
+          <a class="sidebar-link {{ 'is-active' if active_page == 'scanner' else '' }}" href="{{ url_for('scanner') }}" {% if active_page == 'scanner' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">📷</span><span data-i18n="nav.scanner">स्कॅनर</span>
+          </a>
+          <a class="sidebar-link {{ 'is-active' if active_page == 'library' else '' }}" href="{{ url_for('library') }}" {% if active_page == 'library' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">📚</span><span data-i18n="nav.library">ग्रंथालय</span>
+          </a>
+          <a class="sidebar-link {{ 'is-active' if active_page == 'history' else '' }}" href="{{ url_for('history') }}" {% if active_page == 'history' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">🗂</span>
+            <span data-i18n="nav.history">माझे अहवाल</span>
+            {% if reports is defined %}
+              <span class="count-chip">{{ reports|length }}</span>
+            {% endif %}
+          </a>
+        </details>
+      </div>
+
+      <!-- PERSONAL -->
+      <div class="sidebar-group">
+        <span class="sidebar-label" data-i18n="sidebar.group.personal">वैयक्तिक</span>
+        <details>
+          <summary data-i18n="sidebar.personal">वैयक्तिकरण</summary>
+          <a class="sidebar-link {{ 'is-active' if active_page == 'settings' else '' }}" href="{{ url_for('settings') }}" {% if active_page == 'settings' %}aria-current="page"{% endif %}>
+            <span aria-hidden="true">⚙️</span><span data-i18n="nav.settings">सेटिंग्ज</span>
+          </a>
+        </details>
+      </div>
+
+      <!-- HELP -->
+      <div class="sidebar-group">
+        <span class="sidebar-label" data-i18n="sidebar.group.help">मदत</span>
+        <details>
+          <summary data-i18n="sidebar.help">मदत आणि सहाय्य</summary>
+          <a class="sidebar-link" href="{{ url_for('scan_tutorial') }}">
+            <span aria-hidden="true">🎓</span><span data-i18n="tutorial.header">स्कॅन तपासणीसूची</span>
+          </a>
+          <a class="sidebar-link" href="{{ url_for('settings') }}#help">
+            <span aria-hidden="true">❓</span><span data-i18n="settings.help">मदत</span>
+          </a>
+        </details>
+      </div>
+    </aside>
+
+    <!-- ============================================================
+         CONTENT AREA
+         ============================================================ -->
+    <div class="content-area">
+      <nav class="app-nav" data-i18n-aria="app.primary_navigation">
+        <a class="{{ 'is-active' if active_page == 'home'    else '' }}" href="{{ url_for('home')    }}" data-i18n="nav.home" {% if active_page == 'home' %}aria-current="page"{% endif %}>डॅशबोर्ड</a>
+        <a class="{{ 'is-active' if active_page == 'scanner' else '' }}" href="{{ url_for('scanner') }}" data-i18n="nav.scanner" {% if active_page == 'scanner' %}aria-current="page"{% endif %}>स्कॅनर</a>
+        <a class="{{ 'is-active' if active_page == 'library' else '' }}" href="{{ url_for('library') }}" data-i18n="nav.library" {% if active_page == 'library' %}aria-current="page"{% endif %}>ग्रंथालय</a>
+        <a class="{{ 'is-active' if active_page == 'history' else '' }}" href="{{ url_for('history') }}" data-i18n="nav.history" {% if active_page == 'history' %}aria-current="page"{% endif %}>माझे अहवाल</a>
+        <a class="{{ 'is-active' if active_page == 'settings' else '' }}" href="{{ url_for('settings') }}" data-i18n="nav.settings" {% if active_page == 'settings' %}aria-current="page"{% endif %}>सेटिंग्ज</a>
+      </nav>
+
+      <main class="main-layout" id="main-content" role="main">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
+  <footer class="app-footer">
+    <div class="app-footer-status">
+      <p>
+        <span data-i18n="footer.version">आवृत्ती</span>
+        <span>1.0</span>
+      </p>
+      <span id="healthStatus" class="status-chip" data-i18n="footer.status.checking">एपीआय तपासत आहे...</span>
+      <span class="status-chip offline-indicator" data-offline-status aria-live="polite"></span>
+    </div>
+    <a href="{{ url_for('settings') }}#help" data-i18n="footer.doc">मदत आणि सहाय्य</a>
+  </footer>
+
+  <!-- Toast container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Global JS (inline — runs synchronously before modules) -->
+  <script>
+    /* ── Toast ───────────────────────────────────────────────────── */
+    window.showToast = function (type, message, ms) {
+      var c = document.getElementById('toast-container');
+      if (!c) return;
+      var t = document.createElement('div');
+      t.className = 'toast ' + (type || 'info');
+      t.textContent = message || '';
+      t.setAttribute('role', 'status');
+      c.appendChild(t);
+      var delay = typeof ms === 'number' ? ms : 3800;
+      setTimeout(function () {
+        t.style.transition = 'opacity 0.3s ease';
+        t.style.opacity = '0';
+        setTimeout(function () { t.remove(); }, 320);
+      }, delay);
+    };
+
+    /* ── Sidebar ─────────────────────────────────────────────────── */
+    var _sidebar = null, _overlay = null, _toggle = null;
+    function _openSidebar() {
+      if (_sidebar)  _sidebar.classList.add('is-visible');
+      if (_overlay)  { _overlay.classList.add('is-visible'); _overlay.removeAttribute('aria-hidden'); }
+      if (_toggle)   _toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function _closeSidebar() {
+      if (_sidebar)  _sidebar.classList.remove('is-visible');
+      if (_overlay)  { _overlay.classList.remove('is-visible'); _overlay.setAttribute('aria-hidden', 'true'); }
+      if (_toggle)   _toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      _sidebar = document.getElementById('appSidebar');
+      _overlay = document.getElementById('sidebarOverlay');
+      _toggle  = document.querySelector('.sidebar-toggle');
+
+      if (_toggle)  _toggle.addEventListener('click', function () {
+        _sidebar && _sidebar.classList.contains('is-visible') ? _closeSidebar() : _openSidebar();
+      });
+      if (_overlay) _overlay.addEventListener('click', _closeSidebar);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && _sidebar && _sidebar.classList.contains('is-visible')) {
+          _closeSidebar();
+          if (_toggle) _toggle.focus();
+        }
+      });
+
+      /* ── API health ───────────────────────────────────────────── */
+      var _healthKey = 'footer.status.checking';
+      var _healthOkState = null;
+      function updateHealthStatus(key, okState) {
+        var el = document.getElementById('healthStatus');
+        if (!el) return;
+        _healthKey = key;
+        _healthOkState = okState;
+        function applyLabel(text) {
+          el.textContent = text;
+          el.classList.toggle('is-success', okState === true);
+          el.classList.toggle('is-danger', okState === false);
+        }
+        if (typeof window.getTranslation === 'function') {
+          window.getTranslation(key).then(applyLabel).catch(function () { applyLabel(key); });
+        } else {
+          applyLabel(key);
+        }
+      }
+
+      fetch('/api/health').then(function (r) { return r.json(); }).then(function (d) {
+        if (d.ok) {
+          updateHealthStatus('footer.status.healthy', true);
+        } else {
+          updateHealthStatus('footer.status.unavailable', false);
+        }
+      }).catch(function () {
+        updateHealthStatus('footer.status.unavailable', false);
+      });
+
+      document.addEventListener('agro:languagechange', function () {
+        updateHealthStatus(_healthKey, _healthOkState);
+      });
+
+      /* ── Service Worker ───────────────────────────────────────── */
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').catch(function () {});
+        });
+      }
+    });
+  </script>
+
+  <!-- Module scripts (language + theme must load before page JS) -->
+  <script type="module" src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='js/language.js') }}"></script>
+  <script type="module">
+    import { initOfflineStatus } from "{{ url_for('static', filename='js/offline.js') }}";
+    document.addEventListener('DOMContentLoaded', function () { initOfflineStatus(); });
+  </script>
+
+</body>
+</html>

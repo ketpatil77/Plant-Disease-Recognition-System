@@ -1,92 +1,401 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Disease Recognition</title>
-    <link rel="icon" href="../static/images/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="../static/images/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-            PHASAL
-          </a>
-          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-          </div> -->
+{% extends 'base.html' %}
+{% block content %}
+<section class="dashboard-wrapper" data-i18n-aria="home.aria.dashboard">
+
+  <!-- ════════════════════════ LEFT COLUMN ════════════════════════ -->
+  <div class="dashboard-column left-column">
+
+    <!-- ── Hero ── -->
+    <article class="dashboard-card hero-card" data-i18n-aria="home.aria.welcome">
+      <div class="hero-icon" aria-hidden="true">🌾</div>
+      <p class="page-eyebrow" data-i18n="home.hero.eyebrow">मशीन लर्निंग पीक बुद्धिमत्ता</p>
+      <h1 class="hero-title">
+        <span data-i18n="home.hero.title.line1">प्रत्येक पान स्कॅन करा.</span><br>
+        <em data-i18n="home.hero.title.line2">रोग पसरण्यापूर्वी कृती करा.</em>
+      </h1>
+      <p class="hero-sub" data-i18n="home.hero.sub">
+        Close-in monitoring, instant diagnosis, and on-device insights.
+      </p>
+      <div class="hero-offline-note">
+        <span aria-hidden="true">📶</span>
+        <span data-i18n="home.hero.offline">नेटवर्क नसतानाही उपयुक्त राहणारा ऑफलाइन-रेडी अनुभव.</span>
+      </div>
+      <div class="voice-callout">
+        <button type="button" class="pill secondary voice-btn"
+                data-voice-home data-i18n-aria="voice.button">
+          <span aria-hidden="true">🎙</span>
+          <span data-i18n="voice.button">आवाजाद्वारे उपाय</span>
+        </button>
+        <p class="hint" data-i18n="voice.hint">रोगाचे नाव बोला आणि सुचवलेला उपाय ऐका.</p>
+        <span class="mic-status ready" data-i18n="voice.status">माइक तयार</span>
+      </div>
+    </article>
+
+    <!-- ── Coverage summary ── -->
+    <article class="dashboard-card summary-card">
+      <header>
+        <div>
+          <p class="eyebrow" data-i18n="home.stats.eyebrow">प्लॅटफॉर्म स्थिती</p>
+          <h2 data-i18n="home.stats.title">आज प्रणाली काय समर्थपणे हाताळू शकते</h2>
         </div>
-      </nav>
-      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner " >
-            <div class="carousel-item active">
-              <div class="carousel-text-wrapper">
-                <h1 class="carousel-text-title">Plant Disease Recognition</h1>
-                <div class="form-box">
-                  <form action="/upload/" method = "POST" enctype="multipart/form-data">
-                    <h1>Upload Image</h1>
-                    <div class="input-box d-flex">
-                      <input type="file"  accept="image/png, image/jpeg"  name="img" required>
-                    </div>
-                    <div class="input-box d-flex">
-                      <button type="submit" class="btn btn-success m-auto">Upload</button>
-                    </div>
-                  </form>
-                  {% if result %}
-                  <div class="result-container">
-                    <div class="result-box">
-                      <div class="result-img-container">
-                        <!-- <img src="../static/images/Apple_tree_leaf.jpg" alt="uploaded image" class="result-image"> -->
-                        <img src="{{imagepath}}" alt="uploaded image" class="result-image">
-                      </div>
-                      <div class="result-text">
-                        <h3>                   
-                          {{prediction['name']}}
-                        </h3>
-                        <p>
-                          {{prediction['cause']}}
-                        </p>
-                        <p>
-                          {{prediction['cure']}}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                {% endif %}
-                </div>
-                
-                
-                <!-- <div class="m-auto text-center">
-                  <h1>फसल karo Hustle नहीं</h1>
-                  <h3 class="hero-subhead">Lorem ipsum dolor sit amet, consectetur adipiscing elit,</h3>
-                </div> -->
-              </div>
-              
-            </div>
-           
+        <span class="badge badge-accent" data-i18n="home.stats.live">तयार</span>
+      </header>
+      <div class="metric-grid">
+        <article class="metric-tile">
+          <strong>{{ ui_summary.class_count }}</strong>
+          <span class="label" data-i18n="home.stats.classes">मॉडेल वर्ग</span>
+          <p class="hint" data-i18n="home.stats.classes.detail">निरोगी, रोगग्रस्त आणि पार्श्वभूमी ओळख समाविष्ट आहे.</p>
+        </article>
+        <article class="metric-tile">
+          <strong>{{ ui_summary.crop_count }}</strong>
+          <span class="label" data-i18n="home.stats.crops">समर्थित पिके</span>
+          <p class="hint" data-i18n="home.stats.crops.detail">बागायती, भाजीपाला आणि शेतपिके समाविष्ट आहेत.</p>
+        </article>
+        <article class="metric-tile">
+          <strong>{{ ui_summary.report_count }}</strong>
+          <span class="label" data-i18n="home.stats.reports">जतन केलेले अहवाल</span>
+          <p class="hint" data-i18n="home.stats.reports.detail">प्रत्येक यशस्वी निदान इतिहासात उपलब्ध राहते.</p>
+        </article>
+        <article class="metric-tile">
+          <strong>{{ ui_summary.district_count }}</strong>
+          <span class="label" data-i18n="home.stats.districts">जिल्हा पॅनेल</span>
+          <p class="hint" data-i18n="home.stats.districts.detail">हवामान, ट्रेंड आणि बाजार कार्डे जिल्ह्यानुसार बदलतात.</p>
+        </article>
+      </div>
+    </article>
+
+    <!-- ── Scan CTA ── -->
+    <article class="dashboard-card action-card">
+      <header>
+        <div>
+          <h2 data-i18n="home.scan.title">पान स्कॅन करा</h2>
+          <p class="hint" style="margin-top:4px;" data-i18n="home.scan.subtitle">एकच पान, स्थिर हात, नैसर्गिक प्रकाश.</p>
         </div>
-       
+      </header>
+      <div class="action-buttons">
+        <a class="pill primary lg" href="{{ url_for('scanner', mode='camera') }}"
+           >
+          <span aria-hidden="true">📷</span>
+          <span data-i18n="home.scan.cta.camera">कॅमेरा स्कॅन</span>
+        </a>
+        <a class="pill secondary" href="{{ url_for('scanner', mode='upload') }}"
+           >
+          <span aria-hidden="true">🖼</span>
+          <span data-i18n="home.scan.cta.upload">फोटो निवडा</span>
+        </a>
+      </div>
+      <div class="progress-row">
+        <span class="progress-label" data-i18n="home.scan.progress">विश्लेषण सुरू करा</span>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" style="width:30%;"></div>
         </div>
       </div>
-      <script src="../static/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+      <div class="scan-checklist">
+        <div class="check-item">
+          <span aria-hidden="true">1</span>
+          <p data-i18n="home.scan.tip1">एक स्वच्छ पान वापरा आणि पार्श्वभूमी साधी ठेवा.</p>
+        </div>
+        <div class="check-item">
+          <span aria-hidden="true">2</span>
+          <p data-i18n="home.scan.tip2">चकाकी, धूसरपणा आणि कडक सावल्या टाळण्यासाठी दिवसा फोटो घ्या.</p>
+        </div>
+        <div class="check-item">
+          <span aria-hidden="true">3</span>
+          <p data-i18n="home.scan.tip3">निदान तपासा आणि पुढील कृतीसाठी अहवाल जतन करा.</p>
+        </div>
+      </div>
+      <div class="chip-cluster">
+        <span class="eyebrow" data-i18n="home.scan.coverage">जलद कव्हरेज</span>
+        <div class="soft-chip-row">
+          {% for crop in supported_crops %}
+            <span class="soft-chip">{{ crop }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </article>
+
+    <!-- ── Local alert ── -->
+    <article class="dashboard-card intel-card">
+      <header>
+        <div>
+          <p class="eyebrow" data-i18n="home.alert.eyebrow">शेती सल्ला</p>
+          <h2 style="margin-top:4px;" data-i18n="home.alert.title">हवामान सल्ला</h2>
+        </div>
+        {% set risk_level = (weather.risk|lower) if weather else 'medium' %}
+        <span class="badge {{ 'badge-danger' if risk_level == 'high' else 'badge-warning' if risk_level == 'medium' else 'badge-success' }}"
+              data-advisory-risk-badge>
+          {{ weather.risk_label if weather else 'मध्यम' }}
+        </span>
+      </header>
+      <p class="hint" data-advisory-summary>{{ weather.summary if weather else 'रोगदाब लक्षात ठेवा आणि पिकांची लवकर पाहणी करा.' }}</p>
+      <ul class="advisory-list">
+        <li data-advisory-tip>{{ weather.tip }}</li>
+        <li data-i18n="home.alert.action1">आर्द्र पट्टे आणि संवेदनशील ओळींमध्ये पाहणीला प्राधान्य द्या.</li>
+        <li data-i18n="home.alert.action2">संशयास्पद लक्षणे आत्ताच नोंदवा, म्हणजे पुढील स्कॅनची तुलना सोपी होईल.</li>
+      </ul>
+    </article>
+
+    <!-- ── Recent Reports ── -->
+    <article class="dashboard-card reports-card">
+      <header>
+        <h2 data-i18n="home.reports.title">अलीकडील अहवाल</h2>
+        <a href="{{ url_for('history') }}" class="ghost-link">
+          <span data-i18n="home.reports.viewall">सर्व पाहा</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </header>
+      <div class="card-divider" style="margin:0;"></div>
+      {% if reports %}
+        <ul class="report-list">
+          {% for report in reports[:5] %}
+            <li>
+              <div>
+                <div class="report-title-row">
+                  <p class="report-crop">{{ report.crop }}</p>
+                  <span class="badge badge-severity-{{ (report.severity or 'medium')|lower }}">{{ report.confidence }}%</span>
+                </div>
+                <p class="report-disease">{{ report.disease }}</p>
+                <p class="report-date">{{ report.created_at_display or '—' }}</p>
+              </div>
+              <a href="{{ url_for('view_report', report_id=report.id) }}"
+                 class="action-link" data-i18n="home.reports.view">पाहा</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="empty-state" style="padding:var(--sp-8) 0;">
+          <span class="empty-icon">📂</span>
+          <p data-i18n="home.reports.empty">अजून अहवाल जतन झालेले नाहीत.</p>
+          <a class="pill ghost sm" href="{{ url_for('scanner') }}" data-i18n="home.reports.empty.cta">पहिला स्कॅन सुरू करा</a>
+        </div>
+      {% endif %}
+    </article>
+
+  </div><!-- /left-column -->
+
+  <!-- ════════════════════════ RIGHT COLUMN ════════════════════════ -->
+  <div class="dashboard-column right-column">
+
+    <!-- ── 3-Day Forecast ── -->
+    <article class="dashboard-card forecast-card">
+      <header>
+        <div>
+          <h2 data-i18n="home.forecast.title">३-दिवसीय रोग धोका</h2>
+          <p class="hint forecast-context" style="margin-top:4px;" data-i18n="home.forecast.subtitle" data-forecast-context>
+            Localized weather + crop cues inform the forecast.
+          </p>
+        </div>
+      </header>
+      <div class="forecast-grid" data-live-forecast>
+        {% for day in forecast %}
+          <div class="forecast-item" data-forecast-item>
+            <div class="forecast-header">
+              <span class="forecast-day" data-forecast-day>{{ day.day }}</span>
+              <span class="forecast-icon" aria-hidden="true" data-forecast-icon>
+                {%- if day.category == 'fungal' -%}🍄
+                {%- elif day.category == 'bacterial' -%}🦠
+                {%- elif day.category == 'pest' -%}🐛
+                {%- else -%}☁️{%- endif -%}
+              </span>
+            </div>
+            <span class="risk-badge {{ day.level }}" data-forecast-level>{{ 'उच्च' if day.level == 'high' else 'मध्यम' if day.level == 'medium' else 'कमी' }}</span>
+            <div class="forecast-progress-row" aria-label="{{ 'उच्च धोका' if day.level == 'high' else 'मध्यम धोका' if day.level == 'medium' else 'कमी धोका' }}">
+              <div class="forecast-progress" data-level="{{ day.level }}" data-forecast-progress></div>
+            </div>
+            <p class="forecast-description" data-forecast-description>{{ day.description }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </article>
+
+    <!-- ── Weather & Risk ── -->
+    <article class="dashboard-card weather-card" data-weather-panel>
+      <header class="weather-card-header">
+        <div>
+          <h2 data-i18n="home.weather.title">हवामान आणि धोका</h2>
+          <p class="hint weather-meta" data-weather-location data-i18n="home.weather.location.fallback">
+            Using saved district values until live location loads.
+          </p>
+        </div>
+        <div class="weather-controls">
+          <span class="risk-badge {{ (weather.risk|lower) if weather else 'medium' }}" data-weather-risk-badge>
+            {{ weather.risk_label if weather else 'मध्यम' }}
+          </span>
+          <button type="button" class="pill ghost sm" data-weather-refresh data-i18n="home.weather.refresh">
+            Refresh live data
+          </button>
+        </div>
+      </header>
+      <div class="weather-status-row">
+        <p class="hint weather-status" data-weather-status data-i18n="home.weather.status.locating">
+          Detecting device location...
+        </p>
+        <a class="ghost-link weather-attribution"
+           href="https://open-meteo.com/"
+           target="_blank"
+           rel="noreferrer">
+          <span data-i18n="home.weather.attribution">हवामान माहिती: Open-Meteo.com</span>
+        </a>
+      </div>
+      <div class="weather-grid">
+        <div class="weather-stat">
+          <span class="label" data-i18n="home.weather.temp">तापमान</span>
+          <span class="value" data-weather-temp>{{ weather.temperature }}°C</span>
+        </div>
+        <div class="weather-stat">
+          <span class="label" data-i18n="home.weather.humidity">आर्द्रता</span>
+          <span class="value" data-weather-humidity>{{ weather.humidity }}%</span>
+        </div>
+        <div class="weather-stat">
+          <span class="label" data-i18n="home.weather.rain">पाऊस</span>
+          <span class="value" data-weather-rain>{{ weather.rain_display }}</span>
+        </div>
+        <div class="weather-stat">
+          <span class="label" data-i18n="home.weather.wind">वारा</span>
+          <span class="value" data-weather-wind>{{ weather.wind_display }}</span>
+        </div>
+      </div>
+      <p class="hint weather-summary" data-weather-summary>{{ weather.summary }}</p>
+      <div class="weather-tip-panel">
+        <span class="label" data-i18n="home.weather.tip">टिप</span>
+        <p class="value small" data-weather-tip>{{ weather.tip }}</p>
+      </div>
+    </article>
+
+    <!-- ── Market Rates ── -->
+    <article class="dashboard-card market-card" id="marketCard" data-i18n-aria="home.market.title">
+      <header>
+        <div>
+          <p class="eyebrow" data-i18n="home.market.eyebrow">मंडी भाव</p>
+          <h2 data-i18n="home.market.title">बाजार भाव</h2>
+        </div>
+        <div class="market-header-right">
+          <span id="marketSourceBadge"
+                class="market-source-badge fallback"
+                data-i18n-title="home.market.source.title">🟡 लोड होत आहे...</span>
+          <button id="marketRefreshBtn"
+                  class="icon-btn"
+                  data-i18n-title="home.market.refresh"
+                  data-i18n-aria="home.market.refresh">↻</button>
+        </div>
+      </header>
+
+      <!-- District selector + search -->
+      <div class="market-controls">
+        <div class="market-filter">
+          <label class="sr-only" for="districtSelect" data-i18n="home.market.district">जिल्हा</label>
+          <select id="districtSelect" name="district">
+            {% for district in districts %}
+              <option value="{{ district }}"
+                      {% if district == selected_district %}selected{% endif %}>{{ district_labels[district] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="market-search-wrap">
+          <input id="marketSearch"
+                 type="search"
+                 class="market-search"
+                 data-i18n-placeholder="home.market.search_placeholder"
+                 data-i18n-aria="home.market.search_label"
+                 placeholder="Search crop…">
+        </div>
+      </div>
+
+      <!-- Spinner -->
+      <div id="marketSpinner"
+           class="market-spinner"
+           style="display:none"
+           aria-live="polite"
+           data-i18n-aria="common.loading">
+        <span class="spinner-ring"></span>
+        <span data-i18n="home.market.loading">लाइव्ह बाजारभाव आणत आहे...</span>
+      </div>
+
+      <!-- Table -->
+      <div class="market-table">
+        <div class="table-head" id="marketTableHead">
+          <span data-i18n="home.market.crop">पीक / प्रकार</span>
+          <span id="marketPriceUnit" data-i18n="home.market.price">भाव (₹/क्विंटल)</span>
+        </div>
+        <div id="marketTableBody">
+          {% for item in market %}
+            <div class="table-row market-row">
+              <div class="crop-info">
+                <span class="crop-name">{{ item.crop }}</span>
+                <div class="crop-meta"></div>
+              </div>
+              <div class="price-col">
+                <div class="price-bar-wrap">
+                  <div class="price-bar" style="width:60%"></div>
+                </div>
+                <span class="price-value">
+                  ₹{{ item.price }}
+                  <span class="trend-icon {{ 'trend-up' if item.trend == 'up' else 'trend-down' if item.trend == 'down' else '' }}"
+                        aria-label="{{ 'वाढ' if item.trend == 'up' else 'घट' if item.trend == 'down' else 'स्थिर' }}">
+                    {{ '▲' if item.trend == 'up' else '▼' if item.trend == 'down' else '—' }}
+                  </span>
+                </span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="market-footer">
+        <p class="hint" id="marketUpdatedAt">—</p>
+        <p class="hint" data-i18n="home.market.hint">स्रोत: Agmarknet · data.gov.in</p>
+      </div>
+    </article>
+
+    <!-- ── Disease Trends ── -->
+    <article class="dashboard-card analytics-card">
+      <header>
+        <div>
+          <h2 data-i18n="home.analytics.title">स्थानिक रोग ट्रेंड</h2>
+          <p class="hint" style="margin-top:4px;" data-i18n="home.analytics.subtitle">
+            12-month fungal · viral · bacterial frequencies.
+          </p>
+        </div>
+        <div>
+          <label class="sr-only" for="districtFilter" data-i18n="home.market.district">जिल्हा</label>
+          <select id="districtFilter">
+            {% for district in districts %}
+              <option value="{{ district }}">{{ district_labels[district] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </header>
+      <div class="card-divider" style="margin:var(--sp-3) 0;"></div>
+      <div class="trend-chart">
+        <canvas id="trendChart" data-i18n-aria="home.analytics.chart_aria" role="img"></canvas>
+      </div>
+      <div class="trend-legend" data-i18n-aria="common.legend">
+        <span><span class="legend-dot fungal"    aria-hidden="true"></span><span data-i18n="home.analytics.fungal">बुरशीजन्य</span></span>
+        <span><span class="legend-dot viral"     aria-hidden="true"></span><span data-i18n="home.analytics.viral">विषाणूजन्य</span></span>
+        <span><span class="legend-dot bacterial" aria-hidden="true"></span><span data-i18n="home.analytics.bacterial">जीवाणूजन्य</span></span>
+      </div>
+    </article>
+
+  </div><!-- /right-column -->
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script type="module">
+  import initForecastWidget       from "{{ url_for('static', filename='js/forecast.js') }}";
+  import { initVoiceAssistant } from "{{ url_for('static', filename='js/voice.js') }}";
+  import { initTrendChart }     from "{{ url_for('static', filename='js/trends.js') }}";
+  import { initMarketWidget }   from "{{ url_for('static', filename='js/market.js') }}";
+  import initWeatherPanel       from "{{ url_for('static', filename='js/weather.js') }}";
+
+  initVoiceAssistant({
+    buttonSelector: '[data-voice-home]',
+    fallbackKey: 'home.voice.fallback',
+    fallbackText: 'सुरुवात करण्यासाठी पान स्कॅन करा.',
+  });
+  initTrendChart('#trendChart', '#districtFilter');
+  initForecastWidget();
+  initWeatherPanel();
+  initMarketWidget();
+</script>
+{% endblock %}

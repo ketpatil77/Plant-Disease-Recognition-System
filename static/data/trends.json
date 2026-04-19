@@ -1,0 +1,361 @@
+{
+  "districts": [
+    {
+      "name": "Nashik",
+      "monthly": [
+        {"month": "Jan", "fungal": 22, "viral": 12, "bacterial": 8},
+        {"month": "Feb", "fungal": 26, "viral": 14, "bacterial": 10},
+        {"month": "Mar", "fungal": 32, "viral": 16, "bacterial": 12},
+        {"month": "Apr", "fungal": 42, "viral": 19, "bacterial": 16},
+        {"month": "May", "fungal": 58, "viral": 22, "bacterial": 20},
+        {"month": "Jun", "fungal": 68, "viral": 27, "bacterial": 26},
+        {"month": "Jul", "fungal": 64, "viral": 28, "bacterial": 30},
+        {"month": "Aug", "fungal": 60, "viral": 24, "bacterial": 24},
+        {"month": "Sep", "fungal": 44, "viral": 20, "bacterial": 18},
+        {"month": "Oct", "fungal": 32, "viral": 17, "bacterial": 13},
+        {"month": "Nov", "fungal": 26, "viral": 15, "bacterial": 11},
+        {"month": "Dec", "fungal": 22, "viral": 12, "bacterial": 9}
+      ]
+    },
+    {
+      "name": "Dhule",
+      "monthly": [
+        {"month": "Jan", "fungal": 12, "viral": 8,  "bacterial": 4},
+        {"month": "Feb", "fungal": 15, "viral": 9,  "bacterial": 5},
+        {"month": "Mar", "fungal": 20, "viral": 12, "bacterial": 7},
+        {"month": "Apr", "fungal": 28, "viral": 14, "bacterial": 10},
+        {"month": "May", "fungal": 38, "viral": 17, "bacterial": 14},
+        {"month": "Jun", "fungal": 55, "viral": 22, "bacterial": 20},
+        {"month": "Jul", "fungal": 58, "viral": 24, "bacterial": 25},
+        {"month": "Aug", "fungal": 50, "viral": 20, "bacterial": 20},
+        {"month": "Sep", "fungal": 36, "viral": 16, "bacterial": 15},
+        {"month": "Oct", "fungal": 24, "viral": 13, "bacterial": 10},
+        {"month": "Nov", "fungal": 18, "viral": 10, "bacterial": 7},
+        {"month": "Dec", "fungal": 14, "viral": 8,  "bacterial": 5}
+      ]
+    },
+    {
+      "name": "Nandurbar",
+      "monthly": [
+        {"month": "Jan", "fungal": 10, "viral": 7,  "bacterial": 4},
+        {"month": "Feb", "fungal": 13, "viral": 8,  "bacterial": 5},
+        {"month": "Mar", "fungal": 18, "viral": 11, "bacterial": 7},
+        {"month": "Apr", "fungal": 26, "viral": 13, "bacterial": 9},
+        {"month": "May", "fungal": 36, "viral": 16, "bacterial": 13},
+        {"month": "Jun", "fungal": 52, "viral": 20, "bacterial": 18},
+        {"month": "Jul", "fungal": 56, "viral": 22, "bacterial": 22},
+        {"month": "Aug", "fungal": 48, "viral": 18, "bacterial": 18},
+        {"month": "Sep", "fungal": 34, "viral": 15, "bacterial": 13},
+        {"month": "Oct", "fungal": 22, "viral": 11, "bacterial": 9},
+        {"month": "Nov", "fungal": 16, "viral": 9,  "bacterial": 6},
+        {"month": "Dec", "fungal": 12, "viral": 7,  "bacterial": 4}
+      ]
+    },
+    {
+      "name": "Jalgaon",
+      "monthly": [
+        {"month": "Jan", "fungal": 14, "viral": 9,  "bacterial": 5},
+        {"month": "Feb", "fungal": 18, "viral": 11, "bacterial": 6},
+        {"month": "Mar", "fungal": 22, "viral": 13, "bacterial": 9},
+        {"month": "Apr", "fungal": 30, "viral": 15, "bacterial": 11},
+        {"month": "May", "fungal": 42, "viral": 18, "bacterial": 15},
+        {"month": "Jun", "fungal": 60, "viral": 24, "bacterial": 22},
+        {"month": "Jul", "fungal": 62, "viral": 26, "bacterial": 27},
+        {"month": "Aug", "fungal": 54, "viral": 22, "bacterial": 22},
+        {"month": "Sep", "fungal": 40, "viral": 17, "bacterial": 16},
+        {"month": "Oct", "fungal": 28, "viral": 14, "bacterial": 11},
+        {"month": "Nov", "fungal": 20, "viral": 11, "bacterial": 8},
+        {"month": "Dec", "fungal": 16, "viral": 9,  "bacterial": 6}
+      ]
+    },
+    {
+      "name": "Sakri",
+      "monthly": [
+        {"month": "Jan", "fungal": 11, "viral": 7,  "bacterial": 4},
+        {"month": "Feb", "fungal": 14, "viral": 9,  "bacterial": 5},
+        {"month": "Mar", "fungal": 19, "viral": 11, "bacterial": 7},
+        {"month": "Apr", "fungal": 27, "viral": 13, "bacterial": 10},
+        {"month": "May", "fungal": 37, "viral": 16, "bacterial": 13},
+        {"month": "Jun", "fungal": 53, "viral": 21, "bacterial": 19},
+        {"month": "Jul", "fungal": 57, "viral": 23, "bacterial": 23},
+        {"month": "Aug", "fungal": 49, "viral": 19, "bacterial": 19},
+        {"month": "Sep", "fungal": 35, "viral": 15, "bacterial": 14},
+        {"month": "Oct", "fungal": 23, "viral": 12, "bacterial": 9},
+        {"month": "Nov", "fungal": 17, "viral": 9,  "bacterial": 6},
+        {"month": "Dec", "fungal": 13, "viral": 7,  "bacterial": 4}
+      ]
+    },
+    {
+      "name": "Ahmednagar",
+      "monthly": [
+        {"month": "Jan", "fungal": 16, "viral": 11, "bacterial": 6},
+        {"month": "Feb", "fungal": 20, "viral": 13, "bacterial": 8},
+        {"month": "Mar", "fungal": 26, "viral": 15, "bacterial": 10},
+        {"month": "Apr", "fungal": 36, "viral": 18, "bacterial": 13},
+        {"month": "May", "fungal": 48, "viral": 21, "bacterial": 17},
+        {"month": "Jun", "fungal": 62, "viral": 25, "bacterial": 22},
+        {"month": "Jul", "fungal": 64, "viral": 27, "bacterial": 26},
+        {"month": "Aug", "fungal": 56, "viral": 23, "bacterial": 21},
+        {"month": "Sep", "fungal": 42, "viral": 19, "bacterial": 16},
+        {"month": "Oct", "fungal": 30, "viral": 15, "bacterial": 12},
+        {"month": "Nov", "fungal": 22, "viral": 13, "bacterial": 9},
+        {"month": "Dec", "fungal": 18, "viral": 11, "bacterial": 7}
+      ]
+    },
+    {
+      "name": "Pune",
+      "monthly": [
+        {"month": "Jan", "fungal": 18, "viral": 14, "bacterial": 7},
+        {"month": "Feb", "fungal": 22, "viral": 15, "bacterial": 9},
+        {"month": "Mar", "fungal": 28, "viral": 18, "bacterial": 11},
+        {"month": "Apr", "fungal": 35, "viral": 20, "bacterial": 13},
+        {"month": "May", "fungal": 45, "viral": 22, "bacterial": 17},
+        {"month": "Jun", "fungal": 55, "viral": 25, "bacterial": 20},
+        {"month": "Jul", "fungal": 58, "viral": 24, "bacterial": 21},
+        {"month": "Aug", "fungal": 52, "viral": 21, "bacterial": 18},
+        {"month": "Sep", "fungal": 42, "viral": 19, "bacterial": 16},
+        {"month": "Oct", "fungal": 30, "viral": 17, "bacterial": 12},
+        {"month": "Nov", "fungal": 24, "viral": 15, "bacterial": 10},
+        {"month": "Dec", "fungal": 20, "viral": 13, "bacterial": 8}
+      ]
+    },
+    {
+      "name": "Nagpur",
+      "monthly": [
+        {"month": "Jan", "fungal": 20, "viral": 10, "bacterial": 5},
+        {"month": "Feb", "fungal": 25, "viral": 12, "bacterial": 8},
+        {"month": "Mar", "fungal": 30, "viral": 15, "bacterial": 12},
+        {"month": "Apr", "fungal": 40, "viral": 18, "bacterial": 15},
+        {"month": "May", "fungal": 60, "viral": 20, "bacterial": 22},
+        {"month": "Jun", "fungal": 70, "viral": 25, "bacterial": 28},
+        {"month": "Jul", "fungal": 65, "viral": 27, "bacterial": 32},
+        {"month": "Aug", "fungal": 68, "viral": 23, "bacterial": 26},
+        {"month": "Sep", "fungal": 52, "viral": 20, "bacterial": 19},
+        {"month": "Oct", "fungal": 38, "viral": 18, "bacterial": 14},
+        {"month": "Nov", "fungal": 25, "viral": 15, "bacterial": 11},
+        {"month": "Dec", "fungal": 22, "viral": 12, "bacterial": 9}
+      ]
+    },
+    {
+      "name": "Kolhapur",
+      "monthly": [
+        {"month": "Jan", "fungal": 24, "viral": 15, "bacterial": 9},
+        {"month": "Feb", "fungal": 28, "viral": 17, "bacterial": 11},
+        {"month": "Mar", "fungal": 34, "viral": 20, "bacterial": 13},
+        {"month": "Apr", "fungal": 44, "viral": 22, "bacterial": 17},
+        {"month": "May", "fungal": 62, "viral": 27, "bacterial": 23},
+        {"month": "Jun", "fungal": 78, "viral": 32, "bacterial": 30},
+        {"month": "Jul", "fungal": 80, "viral": 34, "bacterial": 35},
+        {"month": "Aug", "fungal": 72, "viral": 29, "bacterial": 28},
+        {"month": "Sep", "fungal": 58, "viral": 24, "bacterial": 22},
+        {"month": "Oct", "fungal": 42, "viral": 20, "bacterial": 16},
+        {"month": "Nov", "fungal": 30, "viral": 17, "bacterial": 12},
+        {"month": "Dec", "fungal": 26, "viral": 15, "bacterial": 10}
+      ]
+    },
+    {
+      "name": "Aurangabad",
+      "monthly": [
+        {"month": "Jan", "fungal": 15, "viral": 10, "bacterial": 6},
+        {"month": "Feb", "fungal": 19, "viral": 12, "bacterial": 7},
+        {"month": "Mar", "fungal": 24, "viral": 14, "bacterial": 10},
+        {"month": "Apr", "fungal": 33, "viral": 16, "bacterial": 12},
+        {"month": "May", "fungal": 44, "viral": 19, "bacterial": 16},
+        {"month": "Jun", "fungal": 59, "viral": 23, "bacterial": 21},
+        {"month": "Jul", "fungal": 62, "viral": 25, "bacterial": 25},
+        {"month": "Aug", "fungal": 54, "viral": 22, "bacterial": 21},
+        {"month": "Sep", "fungal": 40, "viral": 18, "bacterial": 15},
+        {"month": "Oct", "fungal": 28, "viral": 14, "bacterial": 11},
+        {"month": "Nov", "fungal": 21, "viral": 12, "bacterial": 8},
+        {"month": "Dec", "fungal": 17, "viral": 10, "bacterial": 6}
+      ]
+    },
+    {
+      "name": "Amravati",
+      "monthly": [
+        {"month": "Jan", "fungal": 13, "viral": 8,  "bacterial": 5},
+        {"month": "Feb", "fungal": 16, "viral": 10, "bacterial": 6},
+        {"month": "Mar", "fungal": 21, "viral": 12, "bacterial": 8},
+        {"month": "Apr", "fungal": 30, "viral": 15, "bacterial": 11},
+        {"month": "May", "fungal": 42, "viral": 18, "bacterial": 15},
+        {"month": "Jun", "fungal": 60, "viral": 23, "bacterial": 22},
+        {"month": "Jul", "fungal": 64, "viral": 26, "bacterial": 28},
+        {"month": "Aug", "fungal": 55, "viral": 22, "bacterial": 23},
+        {"month": "Sep", "fungal": 40, "viral": 18, "bacterial": 16},
+        {"month": "Oct", "fungal": 28, "viral": 14, "bacterial": 11},
+        {"month": "Nov", "fungal": 20, "viral": 11, "bacterial": 8},
+        {"month": "Dec", "fungal": 15, "viral": 9,  "bacterial": 6}
+      ]
+    },
+    {
+      "name": "Latur",
+      "monthly": [
+        {"month": "Jan", "fungal": 14, "viral": 9,  "bacterial": 5},
+        {"month": "Feb", "fungal": 17, "viral": 11, "bacterial": 6},
+        {"month": "Mar", "fungal": 22, "viral": 13, "bacterial": 9},
+        {"month": "Apr", "fungal": 31, "viral": 16, "bacterial": 11},
+        {"month": "May", "fungal": 43, "viral": 19, "bacterial": 15},
+        {"month": "Jun", "fungal": 58, "viral": 24, "bacterial": 21},
+        {"month": "Jul", "fungal": 61, "viral": 26, "bacterial": 25},
+        {"month": "Aug", "fungal": 53, "viral": 22, "bacterial": 21},
+        {"month": "Sep", "fungal": 39, "viral": 18, "bacterial": 15},
+        {"month": "Oct", "fungal": 27, "viral": 14, "bacterial": 11},
+        {"month": "Nov", "fungal": 20, "viral": 11, "bacterial": 8},
+        {"month": "Dec", "fungal": 16, "viral": 9,  "bacterial": 6}
+      ]
+    },
+    {
+      "name": "Solapur",
+      "monthly": [
+        {"month": "Jan", "fungal": 15, "viral": 10, "bacterial": 5},
+        {"month": "Feb", "fungal": 18, "viral": 12, "bacterial": 7},
+        {"month": "Mar", "fungal": 24, "viral": 14, "bacterial": 9},
+        {"month": "Apr", "fungal": 32, "viral": 16, "bacterial": 12},
+        {"month": "May", "fungal": 44, "viral": 19, "bacterial": 16},
+        {"month": "Jun", "fungal": 58, "viral": 24, "bacterial": 22},
+        {"month": "Jul", "fungal": 60, "viral": 25, "bacterial": 24},
+        {"month": "Aug", "fungal": 52, "viral": 22, "bacterial": 20},
+        {"month": "Sep", "fungal": 38, "viral": 18, "bacterial": 14},
+        {"month": "Oct", "fungal": 26, "viral": 14, "bacterial": 10},
+        {"month": "Nov", "fungal": 20, "viral": 12, "bacterial": 8},
+        {"month": "Dec", "fungal": 16, "viral": 10, "bacterial": 6}
+      ]
+    },
+    {
+      "name": "Jalna",
+      "monthly": [
+        {"month": "Jan", "fungal": 12, "viral": 8,  "bacterial": 4},
+        {"month": "Feb", "fungal": 15, "viral": 9,  "bacterial": 6},
+        {"month": "Mar", "fungal": 19, "viral": 11, "bacterial": 7},
+        {"month": "Apr", "fungal": 27, "viral": 13, "bacterial": 10},
+        {"month": "May", "fungal": 38, "viral": 16, "bacterial": 14},
+        {"month": "Jun", "fungal": 54, "viral": 21, "bacterial": 19},
+        {"month": "Jul", "fungal": 57, "viral": 23, "bacterial": 23},
+        {"month": "Aug", "fungal": 49, "viral": 19, "bacterial": 19},
+        {"month": "Sep", "fungal": 35, "viral": 16, "bacterial": 14},
+        {"month": "Oct", "fungal": 23, "viral": 12, "bacterial": 9},
+        {"month": "Nov", "fungal": 17, "viral": 10, "bacterial": 7},
+        {"month": "Dec", "fungal": 13, "viral": 8,  "bacterial": 5}
+      ]
+    },
+    {
+      "name": "Parbhani",
+      "monthly": [
+        {"month": "Jan", "fungal": 12, "viral": 8,  "bacterial": 4},
+        {"month": "Feb", "fungal": 15, "viral": 9,  "bacterial": 5},
+        {"month": "Mar", "fungal": 19, "viral": 11, "bacterial": 7},
+        {"month": "Apr", "fungal": 27, "viral": 13, "bacterial": 10},
+        {"month": "May", "fungal": 37, "viral": 16, "bacterial": 13},
+        {"month": "Jun", "fungal": 52, "viral": 21, "bacterial": 18},
+        {"month": "Jul", "fungal": 55, "viral": 22, "bacterial": 22},
+        {"month": "Aug", "fungal": 47, "viral": 19, "bacterial": 18},
+        {"month": "Sep", "fungal": 33, "viral": 15, "bacterial": 13},
+        {"month": "Oct", "fungal": 22, "viral": 11, "bacterial": 9},
+        {"month": "Nov", "fungal": 16, "viral": 9,  "bacterial": 6},
+        {"month": "Dec", "fungal": 12, "viral": 7,  "bacterial": 4}
+      ]
+    },
+    {
+      "name": "Hingoli",
+      "monthly": [
+        {"month": "Jan", "fungal": 11, "viral": 7,  "bacterial": 4},
+        {"month": "Feb", "fungal": 14, "viral": 9,  "bacterial": 5},
+        {"month": "Mar", "fungal": 18, "viral": 11, "bacterial": 7},
+        {"month": "Apr", "fungal": 26, "viral": 13, "bacterial": 9},
+        {"month": "May", "fungal": 36, "viral": 16, "bacterial": 13},
+        {"month": "Jun", "fungal": 51, "viral": 20, "bacterial": 18},
+        {"month": "Jul", "fungal": 54, "viral": 22, "bacterial": 21},
+        {"month": "Aug", "fungal": 46, "viral": 18, "bacterial": 17},
+        {"month": "Sep", "fungal": 33, "viral": 15, "bacterial": 12},
+        {"month": "Oct", "fungal": 21, "viral": 11, "bacterial": 8},
+        {"month": "Nov", "fungal": 15, "viral": 9,  "bacterial": 6},
+        {"month": "Dec", "fungal": 11, "viral": 7,  "bacterial": 4}
+      ]
+    },
+    {
+      "name": "Nanded",
+      "monthly": [
+        {"month": "Jan", "fungal": 14, "viral": 9,  "bacterial": 5},
+        {"month": "Feb", "fungal": 17, "viral": 11, "bacterial": 7},
+        {"month": "Mar", "fungal": 22, "viral": 13, "bacterial": 9},
+        {"month": "Apr", "fungal": 30, "viral": 15, "bacterial": 12},
+        {"month": "May", "fungal": 42, "viral": 18, "bacterial": 15},
+        {"month": "Jun", "fungal": 57, "viral": 23, "bacterial": 21},
+        {"month": "Jul", "fungal": 60, "viral": 25, "bacterial": 24},
+        {"month": "Aug", "fungal": 52, "viral": 21, "bacterial": 20},
+        {"month": "Sep", "fungal": 38, "viral": 17, "bacterial": 15},
+        {"month": "Oct", "fungal": 26, "viral": 13, "bacterial": 10},
+        {"month": "Nov", "fungal": 19, "viral": 11, "bacterial": 8},
+        {"month": "Dec", "fungal": 15, "viral": 9,  "bacterial": 6}
+      ]
+    },
+    {
+      "name": "Osmanabad",
+      "monthly": [
+        {"month": "Jan", "fungal": 13, "viral": 9,  "bacterial": 5},
+        {"month": "Feb", "fungal": 16, "viral": 10, "bacterial": 6},
+        {"month": "Mar", "fungal": 21, "viral": 12, "bacterial": 8},
+        {"month": "Apr", "fungal": 29, "viral": 15, "bacterial": 11},
+        {"month": "May", "fungal": 40, "viral": 18, "bacterial": 14},
+        {"month": "Jun", "fungal": 55, "viral": 22, "bacterial": 20},
+        {"month": "Jul", "fungal": 58, "viral": 24, "bacterial": 23},
+        {"month": "Aug", "fungal": 50, "viral": 21, "bacterial": 19},
+        {"month": "Sep", "fungal": 37, "viral": 17, "bacterial": 14},
+        {"month": "Oct", "fungal": 25, "viral": 13, "bacterial": 10},
+        {"month": "Nov", "fungal": 18, "viral": 10, "bacterial": 7},
+        {"month": "Dec", "fungal": 14, "viral": 8,  "bacterial": 5}
+      ]
+    },
+    {
+      "name": "Beed",
+      "monthly": [
+        {"month": "Jan", "fungal": 13, "viral": 8,  "bacterial": 5},
+        {"month": "Feb", "fungal": 16, "viral": 10, "bacterial": 6},
+        {"month": "Mar", "fungal": 20, "viral": 12, "bacterial": 8},
+        {"month": "Apr", "fungal": 28, "viral": 14, "bacterial": 11},
+        {"month": "May", "fungal": 39, "viral": 17, "bacterial": 14},
+        {"month": "Jun", "fungal": 54, "viral": 22, "bacterial": 20},
+        {"month": "Jul", "fungal": 57, "viral": 24, "bacterial": 23},
+        {"month": "Aug", "fungal": 49, "viral": 20, "bacterial": 19},
+        {"month": "Sep", "fungal": 36, "viral": 16, "bacterial": 14},
+        {"month": "Oct", "fungal": 24, "viral": 13, "bacterial": 10},
+        {"month": "Nov", "fungal": 18, "viral": 10, "bacterial": 7},
+        {"month": "Dec", "fungal": 14, "viral": 8,  "bacterial": 5}
+      ]
+    },
+    {
+      "name": "Wardha",
+      "monthly": [
+        {"month": "Jan", "fungal": 16, "viral": 10, "bacterial": 5},
+        {"month": "Feb", "fungal": 20, "viral": 12, "bacterial": 7},
+        {"month": "Mar", "fungal": 25, "viral": 14, "bacterial": 10},
+        {"month": "Apr", "fungal": 34, "viral": 17, "bacterial": 12},
+        {"month": "May", "fungal": 46, "viral": 20, "bacterial": 16},
+        {"month": "Jun", "fungal": 62, "viral": 25, "bacterial": 23},
+        {"month": "Jul", "fungal": 65, "viral": 27, "bacterial": 28},
+        {"month": "Aug", "fungal": 57, "viral": 23, "bacterial": 23},
+        {"month": "Sep", "fungal": 43, "viral": 19, "bacterial": 17},
+        {"month": "Oct", "fungal": 30, "viral": 15, "bacterial": 12},
+        {"month": "Nov", "fungal": 22, "viral": 12, "bacterial": 9},
+        {"month": "Dec", "fungal": 17, "viral": 10, "bacterial": 6}
+      ]
+    },
+    {
+      "name": "Yavatmal",
+      "monthly": [
+        {"month": "Jan", "fungal": 14, "viral": 9,  "bacterial": 5},
+        {"month": "Feb", "fungal": 17, "viral": 11, "bacterial": 6},
+        {"month": "Mar", "fungal": 22, "viral": 13, "bacterial": 9},
+        {"month": "Apr", "fungal": 31, "viral": 16, "bacterial": 12},
+        {"month": "May", "fungal": 43, "viral": 19, "bacterial": 16},
+        {"month": "Jun", "fungal": 60, "viral": 24, "bacterial": 23},
+        {"month": "Jul", "fungal": 63, "viral": 26, "bacterial": 27},
+        {"month": "Aug", "fungal": 55, "viral": 22, "bacterial": 22},
+        {"month": "Sep", "fungal": 41, "viral": 18, "bacterial": 16},
+        {"month": "Oct", "fungal": 28, "viral": 14, "bacterial": 11},
+        {"month": "Nov", "fungal": 21, "viral": 11, "bacterial": 8},
+        {"month": "Dec", "fungal": 16, "viral": 9,  "bacterial": 6}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="tutorial-layout">
+  <article class="glass-card tutorial-card">
+    <header>
+      <p class="eyebrow" data-i18n="tutorial.header">चांगल्या स्कॅनसाठी मार्गदर्शिका</p>
+      <h1 data-i18n="tutorial.title">पानाची छायाचित्रण कला</h1>
+    </header>
+    <div class="tutorial-grid">
+      <article>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="presentation">
+            <circle cx="32" cy="32" r="18" fill="none" stroke="var(--neon-green)" stroke-width="3" />
+            <g stroke="var(--crop-yellow)" stroke-width="2">
+              <line x1="32" y1="6" x2="32" y2="18" />
+              <line x1="32" y1="46" x2="32" y2="58" />
+              <line x1="6" y1="32" x2="18" y2="32" />
+              <line x1="46" y1="32" x2="58" y2="32" />
+            </g>
+          </svg>
+        </div>
+        <h3 data-i18n="tutorial.step1">प्रकाश उजळ</h3>
+        <p data-i18n="tutorial.detail1">उजेडात फोटो घ्या, फ्लॅश टाळा.</p>
+      </article>
+      <article>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="presentation">
+            <path d="M20 45 C22 20, 42 20, 44 45" fill="none" stroke="var(--leaf-green)" stroke-width="3" />
+            <circle cx="32" cy="30" r="10" fill="rgba(255,255,255,0.1)" stroke="var(--sky-blue)" stroke-width="2" />
+          </svg>
+        </div>
+        <h3 data-i18n="tutorial.step2">एक पान निवडा</h3>
+        <p data-i18n="tutorial.detail2">पान स्पष्टपणे केंद्रात ठेवा.</p>
+      </article>
+      <article>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="presentation">
+            <rect x="14" y="18" width="36" height="28" rx="6" fill="none" stroke="var(--sky-blue)" stroke-width="3" />
+            <line x1="32" y1="14" x2="32" y2="10" stroke="var(--neon-green)" stroke-width="3" />
+            <circle cx="32" cy="32" r="8" fill="none" stroke="var(--neon-green)" stroke-width="2" />
+          </svg>
+        </div>
+        <h3 data-i18n="tutorial.step3">कॅमेरा शांत ठेवा</h3>
+        <p data-i18n="tutorial.detail3">हात थोडा स्थिर ठेवा.</p>
+      </article>
+      <article>
+        <div class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="presentation">
+            <rect x="12" y="22" width="40" height="24" rx="12" fill="none" stroke="var(--crop-yellow)" stroke-width="3" />
+            <line x1="12" y1="32" x2="52" y2="32" stroke="var(--neon-green)" stroke-width="3" stroke-dasharray="8 4" />
+            <line x1="32" y1="22" x2="32" y2="46" stroke="var(--sky-blue)" stroke-width="2" />
+          </svg>
+        </div>
+        <h3 data-i18n="tutorial.step4">फ्रेम भरावा</h3>
+        <p data-i18n="tutorial.detail4">पान संपूर्ण फ्रेमभर ठेवा.</p>
+      </article>
+    </div>
+    <a class="pill secondary" href="{{ url_for('scanner') }}" data-i18n="tutorial.cta">स्कॅनवर परत जा</a>
+  </article>
+</section>
+{% endblock %}

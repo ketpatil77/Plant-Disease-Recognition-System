@@ -1,0 +1,107 @@
+{
+  "app": {
+    "port": 5000,
+    "debug": false,
+    "max_upload_size_mb": 2
+  },
+  "model": {
+    "input_size": 224,
+    "num_classes": 39,
+    "normalization": {
+      "value": 255.0,
+      "description": "Normalize pixel values by dividing by 255 to get [0,1] range"
+    }
+  },
+  "upload": {
+    "allowed_extensions": [".jpg", ".jpeg", ".png", ".webp"],
+    "max_size_mb": 2,
+    "retention_days": 30
+  },
+  "forecast": [
+    {
+      "day": "Today",
+      "category": "fungal",
+      "level": "high",
+      "temperature": 29,
+      "humidity": 78,
+      "rain_chance": 50,
+      "description": "High leaf-wetness window. Keep fungal precautions ready."
+    },
+    {
+      "day": "Tomorrow",
+      "category": "bacterial",
+      "level": "medium",
+      "temperature": 30,
+      "humidity": 68,
+      "rain_chance": 30,
+      "description": "Warm and humid conditions can support bacterial spread."
+    },
+    {
+      "day": "Day 3",
+      "category": "pest",
+      "level": "low",
+      "temperature": 31,
+      "humidity": 61,
+      "rain_chance": 20,
+      "description": "Lower disease pressure, but continue scouting for pests."
+    }
+  ],
+  "weather_by_district": {
+    "Pune": {
+      "temperature": 29,
+      "humidity": 74,
+      "rain": "20%",
+      "risk": "high",
+      "tip": "Avoid evening irrigation if fungal spots are present."
+    },
+    "Nashik": {
+      "temperature": 27,
+      "humidity": 69,
+      "rain": "10%",
+      "risk": "medium",
+      "tip": "Inspect vineyards early morning for fresh lesions."
+    },
+    "Nagpur": {
+      "temperature": 32,
+      "humidity": 58,
+      "rain": "5%",
+      "risk": "low",
+      "tip": "Heat stress is higher than foliar disease pressure today."
+    },
+    "Kolhapur": {
+      "temperature": 28,
+      "humidity": 81,
+      "rain": "35%",
+      "risk": "high",
+      "tip": "High humidity favors fungal outbreaks. Keep leaves dry."
+    }
+  },
+  "market_by_district": {
+    "Pune": [
+      {"crop": "Tomato", "price": "2200", "trend": "up"},
+      {"crop": "Potato", "price": "1750", "trend": "steady"},
+      {"crop": "Grapes", "price": "6400", "trend": "up"}
+    ],
+    "Nashik": [
+      {"crop": "Onion", "price": "1800", "trend": "down"},
+      {"crop": "Grapes", "price": "6200", "trend": "up"},
+      {"crop": "Tomato", "price": "2100", "trend": "steady"}
+    ],
+    "Nagpur": [
+      {"crop": "Orange", "price": "4300", "trend": "up"},
+      {"crop": "Soybean", "price": "4700", "trend": "steady"},
+      {"crop": "Tomato", "price": "2050", "trend": "down"}
+    ],
+    "Kolhapur": [
+      {"crop": "Sugarcane", "price": "340", "trend": "steady"},
+      {"crop": "Tomato", "price": "2250", "trend": "up"},
+      {"crop": "Corn", "price": "1920", "trend": "steady"}
+    ]
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s %(levelname)s %(message)s",
+    "max_file_size_mb": 10,
+    "backup_count": 5
+  }
+}

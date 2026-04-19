@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="prediction-layout">
+
+  <!-- ── Summary / main card ── -->
+  <article class="glass-card summary-card">
+
+    <div class="summary-head">
+      <div class="summary-labels">
+        <p class="page-eyebrow" data-i18n="prediction.label">निदान</p>
+        <h1>{{ prediction_payload.marathi_name or prediction_payload.disease or '?' }}</h1>
+        <p class="sub-title">{{ prediction_payload.crop }} · {{ prediction_payload.disease }}</p>
+      </div>
+      <div class="badge-group">
+        <span class="badge badge-type"
+              data-prediction-category-label
+              data-category="{{ prediction_payload.category }}">{{ 'बुरशीजन्य' if prediction_payload.category == 'fungal' else 'जीवाणूजन्य' if prediction_payload.category == 'bacterial' else 'विषाणूजन्य' if prediction_payload.category == 'viral' else 'किडीचा' if prediction_payload.category == 'pest' else 'निरोगी' if prediction_payload.category == 'healthy' else 'इशारा' if prediction_payload.category == 'warning' else 'त्रुटी' }}</span>
+        <span class="badge badge-severity-{{ prediction_payload.badge_variant or 'medium' }}"
+              data-prediction-status-label
+              data-status="{{ prediction_payload.status_code }}"
+              data-severity="{{ prediction_payload.severity }}"
+              data-confidence="{{ prediction_payload.confidence }}">
+          {{ prediction_payload.status_summary }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Confidence -->
+    <div>
+      <div class="confidence-row">
+        <span data-i18n="prediction.confidence">विश्वास</span>
+        <strong>{{ prediction_payload.confidence }}%</strong>
+      </div>
+      <div class="confidence-track"
+           role="progressbar"
+           aria-valuenow="{{ prediction_payload.confidence }}"
+           aria-valuemin="0" aria-valuemax="100"
+           data-i18n-aria="prediction.confidence">
+        <div class="confidence-fill" style="width:{{ prediction_payload.confidence }}%;"></div>
+      </div>
+      <p class="confidence-note" data-i18n="prediction.confidence.note">विश्वास गुणांक दिशादर्शक म्हणून वापरा; फोटो धूसर, सावलीत किंवा अपूर्ण असल्यास पुन्हा स्कॅन करा.</p>
+    </div>
+
+    <div class="prediction-facts">
+      <article class="fact-tile">
+        <span class="label" data-i18n="prediction.summary.category">श्रेणी</span>
+        <strong data-prediction-category-label data-category="{{ prediction_payload.category }}">{{ 'बुरशीजन्य' if prediction_payload.category == 'fungal' else 'जीवाणूजन्य' if prediction_payload.category == 'bacterial' else 'विषाणूजन्य' if prediction_payload.category == 'viral' else 'किडीचा' if prediction_payload.category == 'pest' else 'निरोगी' if prediction_payload.category == 'healthy' else 'इशारा' if prediction_payload.category == 'warning' else 'त्रुटी' }}</strong>
+      </article>
+      <article class="fact-tile">
+        <span class="label" data-i18n="prediction.summary.severity">प्राधान्य</span>
+        <strong data-prediction-severity-label data-severity="{{ prediction_payload.severity }}">{{ 'उच्च' if prediction_payload.severity == 'high' else 'कमी' if prediction_payload.severity == 'low' else 'मध्यम' }}</strong>
+      </article>
+      <article class="fact-tile">
+        <span class="label" data-i18n="prediction.summary.time">जतन</span>
+        <strong>{{ prediction_payload.report_payload.created_at_display if prediction_payload.report_payload and prediction_payload.report_payload.created_at_display else '—' }}</strong>
+      </article>
+      <article class="fact-tile">
+        <span class="label" data-i18n="prediction.summary.report_id">अहवाल क्रमांक</span>
+        <strong>#{{ prediction_payload.report_payload.id if prediction_payload.report_payload and prediction_payload.report_payload.id else '—' }}</strong>
+      </article>
+    </div>
+
+    <!-- Cause -->
+    <section class="result-section">
+      <h2 data-i18n="prediction.cause">कारण</h2>
+      <p>{{ prediction_payload.cause or '—' }}</p>
+    </section>
+
+    <!-- Remedies -->
+    <section class="result-section"
+             data-remedy-panel
+             data-remedy-text="{{ prediction_payload.remedy | replace('"', '&quot;') }}">
+      <h2 data-i18n="prediction.remedies">उपाय</h2>
+      {% if prediction_payload.remedy_sections %}
+        {% for title, steps in prediction_payload.remedy_sections.items() %}
+          <details {% if loop.first %}open{% endif %}>
+            <summary data-i18n="prediction.remedy_section.{{ title }}">
+              {{ 'रासायनिक पर्याय' if title == 'chemical' else 'सेंद्रिय पर्याय' if title == 'organic' else 'प्रतिबंधक पावले' }}
+            </summary>
+            <ul>
+              {% for step in steps %}
+                <li>{{ step }}</li>
+              {% endfor %}
+            </ul>
+          </details>
+        {% endfor %}
+      {% else %}
+        <p>{{ prediction_payload.remedy or '—' }}</p>
+      {% endif %}
+    </section>
+
+    <!-- Recommendations -->
+    {% if prediction_payload.area_recommendations %}
+    <section class="result-section">
+      <h2 data-i18n="prediction.recommendations">शिफारस केलेली उत्पादने</h2>
+      <p>{{ prediction_payload.area_recommendations.generic_advice }}</p>
+      <div class="recommendation-grid">
+        <article class="recommendation-card">
+          <span class="label" data-i18n="prediction.recommendations.chemical">रासायनिक पर्याय</span>
+          <strong>{{ prediction_payload.area_recommendations.chemical_product or '—' }}</strong>
+          {% if prediction_payload.area_recommendations.chemical_verification %}
+            <p>{{ prediction_payload.area_recommendations.chemical_verification }}</p>
+          {% endif %}
+        </article>
+        <article class="recommendation-card">
+          <span class="label" data-i18n="prediction.recommendations.organic">सेंद्रिय पर्याय</span>
+          <strong>{{ prediction_payload.area_recommendations.organic_product or '—' }}</strong>
+          {% if prediction_payload.area_recommendations.organic_verification %}
+            <p>{{ prediction_payload.area_recommendations.organic_verification }}</p>
+          {% endif %}
+        </article>
+        {% if prediction_payload.area_recommendations.withholding_period %}
+        <article class="recommendation-card">
+          <span class="label" data-i18n="prediction.recommendations.interval">तोडणीपूर्व अंतर</span>
+          <strong>{{ prediction_payload.area_recommendations.withholding_period }}</strong>
+          <p>{{ prediction_payload.area_recommendations.availability or '' }}</p>
+        </article>
+        {% endif %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Prevention -->
+    <section class="result-section">
+      <h2 data-i18n="prediction.prevention">प्रतिबंध</h2>
+      {% if prediction_payload.prevention_steps %}
+        <ul class="prevention-list">
+          {% for step in prediction_payload.prevention_steps %}
+            <li>{{ step }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% if prediction_payload.weather_note %}
+        <p class="weather-note">{{ prediction_payload.weather_note }}</p>
+      {% endif %}
+    </section>
+
+    <section class="result-section">
+      <h2 data-i18n="prediction.next_actions">पुढील शिफारस केलेली पावले</h2>
+      <ul class="prevention-list">
+        {% for item in prediction_payload.insights.checklist %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <!-- Actions -->
+    <div class="action-grid">
+      <button type="button" class="pill primary" id="playAudio"
+              data-audio-text="{{ prediction_payload.remedy | replace('"', '&quot;') }}">
+        <span aria-hidden="true">🔊</span>
+          <span data-i18n="prediction.audio">ऐका</span>
+      </button>
+      <button type="button" class="pill secondary voice-btn"
+              data-voice-pred data-i18n-aria="voice.button">
+        <span aria-hidden="true">🎤</span>
+          <span data-i18n="voice.button">आवाजाद्वारे उपाय</span>
+      </button>
+      {% if prediction_payload.report_payload and prediction_payload.report_payload.id %}
+        <a class="pill ghost" href="{{ url_for('history') }}">
+          <span aria-hidden="true">📋</span>
+          <span data-i18n="prediction.history">इतिहास</span>
+        </a>
+        <a class="pill ghost" href="{{ url_for('history_download', report_id=prediction_payload.report_payload.id) }}">
+          <span aria-hidden="true">⬇</span>
+          <span data-i18n="prediction.pdf">PDF डाउनलोड करा</span>
+        </a>
+      {% else %}
+        <a class="pill ghost" href="{{ url_for('history') }}">
+          <span aria-hidden="true">📋</span>
+          <span data-i18n="prediction.history">इतिहास</span>
+        </a>
+        <a class="pill ghost" href="{{ url_for('scanner') }}">
+          <span aria-hidden="true">🔁</span>
+          <span data-i18n="prediction.scan_again">पुन्हा स्कॅन करा</span>
+        </a>
+      {% endif %}
+    </div>
+
+  </article>
+
+  <!-- ── Image + insights sidebar ── -->
+  <article class="glass-card image-card">
+    {% if prediction_payload.image_url %}
+      <p class="eyebrow" data-i18n="prediction.capture">कॅप्चर केलेले पान</p>
+      <img class="leaf-img"
+           src="{{ prediction_payload.image_url }}"
+           data-i18n-alt="prediction.capture"
+           alt="अपलोड केलेल्या पानाची प्रतिमा" loading="lazy" />
+    {% else %}
+      <div class="placeholder" data-i18n="prediction.image.placeholder">
+        प्रतिमा उपलब्ध नाही
+      </div>
+    {% endif %}
+
+    <div class="capture-meta">
+      <div class="capture-meta-row">
+        <span class="label" data-i18n="prediction.summary.crop">पीक</span>
+        <strong>{{ prediction_payload.crop }}</strong>
+      </div>
+      <div class="capture-meta-row">
+        <span class="label" data-i18n="prediction.summary.disease">रोग</span>
+        <strong>{{ prediction_payload.disease }}</strong>
+      </div>
+    </div>
+
+    <div class="insights">
+      <h2 data-i18n="prediction.insights">स्थिती अंतर्दृष्टी</h2>
+      <p>{{ prediction_payload.insights.likely_cause }}</p>
+      <p>
+        <strong data-i18n="prediction.spray">सुचवलेला फवारणी वेळ:</strong>
+        {{ prediction_payload.insights.spray_time }}
+      </p>
+      <p>
+        <strong data-i18n="prediction.check">तपासा:</strong>
+        {{ prediction_payload.insights.checklist | join(', ') }}
+      </p>
+    </div>
+  </article>
+
+</section>
+
+<script>
+  /* Audio playback */
+  var playBtn = document.getElementById('playAudio');
+  if (playBtn) {
+    playBtn.addEventListener('click', async function () {
+      var text = playBtn.dataset.audioText;
+      if (!text) return;
+      var label = playBtn.querySelector('[data-i18n]');
+      var loadingText = typeof window.getTranslation === 'function'
+        ? await window.getTranslation('prediction.audio.loading')
+        : 'Loading...';
+      var playingText = typeof window.getTranslation === 'function'
+        ? await window.getTranslation('prediction.audio.playing')
+        : 'Playing...';
+      var defaultText = typeof window.getTranslation === 'function'
+        ? await window.getTranslation('prediction.audio')
+        : 'Listen';
+      playBtn.disabled = true;
+      if (label) label.textContent = loadingText;
+      try {
+        var speakLang = (window.getCurrentLang && window.getCurrentLang() === 'en') ? 'en' : 'mr';
+        var resp = await fetch('/speak?text=' + encodeURIComponent(text) + '&lang=' + encodeURIComponent(speakLang));
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        var blob = await resp.blob();
+        var url  = URL.createObjectURL(blob);
+        var audio = new Audio(url);
+        audio.play();
+        audio.onended = function () { URL.revokeObjectURL(url); };
+        if (label) label.textContent = playingText;
+        audio.onended = function () {
+          URL.revokeObjectURL(url);
+          if (label) label.textContent = defaultText;
+          playBtn.disabled = false;
+        };
+      } catch (e) {
+        console.error(e);
+        var errorText = typeof window.getTranslation === 'function'
+          ? await window.getTranslation('prediction.audio.unavailable')
+          : 'Audio unavailable. Please try again.';
+        window.showToast && window.showToast('error', errorText);
+        if (label) label.textContent = defaultText;
+        playBtn.disabled = false;
+      }
+    });
+  }
+</script>
+<script type="module">
+  import { initVoiceAssistant } from "{{ url_for('static', filename='js/voice.js') }}";
+  import { storeLastReport }    from "{{ url_for('static', filename='js/offline.js') }}";
+
+  var panel = document.querySelector('[data-remedy-panel]');
+
+  async function applyPredictionTranslations() {
+    if (typeof window.getTranslation !== 'function') return;
+
+    var categoryEls = document.querySelectorAll('[data-prediction-category-label]');
+    for (const el of categoryEls) {
+      var category = (el.dataset.category || '').toLowerCase();
+      if (!category) continue;
+      el.textContent = await window.getTranslation(`prediction.category.${category}`);
+    }
+
+    var severityEls = document.querySelectorAll('[data-prediction-severity-label]');
+    for (const el of severityEls) {
+      var severity = (el.dataset.severity || '').toLowerCase();
+      if (!severity) continue;
+      el.textContent = await window.getTranslation(`prediction.severity.${severity}`);
+    }
+
+    var statusEls = document.querySelectorAll('[data-prediction-status-label]');
+    for (const el of statusEls) {
+      var confidence = el.dataset.confidence || '0';
+      var status = (el.dataset.status || '').toLowerCase();
+      if (status === 'retake_photo') {
+        el.textContent = await window.getTranslation('prediction.status.retake_photo');
+      } else if (status === 'healthy') {
+        el.textContent = await window.getTranslation('prediction.status.healthy');
+      } else if (status === 'error') {
+        el.textContent = await window.getTranslation('prediction.status.error');
+      } else {
+        el.textContent = await window.getTranslation('prediction.status.disease', { confidence });
+      }
+    }
+  }
+
+  initVoiceAssistant({
+    buttonSelector: '[data-voice-pred]',
+    getRemedy: function () { return panel ? panel.dataset.remedyText : ''; },
+    fallbackText: {{ prediction_payload.remedy | tojson }},
+    onResult: function () {
+      if (!panel) return;
+      panel.classList.add('voice-highlight');
+      setTimeout(function () { panel.classList.remove('voice-highlight'); }, 1400);
+    },
+  });
+
+  try {
+    storeLastReport({
+      crop:       {{ prediction_payload.crop       | tojson }},
+      disease:    {{ prediction_payload.disease    | tojson }},
+      severity:   {{ prediction_payload.severity   | tojson }},
+      confidence: {{ prediction_payload.confidence | tojson }},
+      time:       '{{ prediction_payload.report_payload.created_at if prediction_payload.report_payload and prediction_payload.report_payload.created_at else "" }}',
+    });
+  } catch (e) {}
+
+  applyPredictionTranslations();
+  document.addEventListener('agro:languagechange', applyPredictionTranslations);
+</script>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="scanner-layout">
+  <article class="glass-card scanner-card">
+
+    <!-- Header -->
+    <header>
+      <p class="page-eyebrow" data-i18n="scanner.intro">कॅमेरा वापरा किंवा पानाचा फोटो अपलोड करून सुरू करा.</p>
+      <h1 data-i18n="scanner.title">पान स्कॅन करा</h1>
+    </header>
+
+    <form id="scannerForm"
+          class="scanner-form"
+          data-scanner-form
+          action="{{ url_for('uploadimage') }}"
+          method="POST"
+          enctype="multipart/form-data">
+
+      <!-- Preview area -->
+      <div class="scanner-preview" data-scanner-preview>
+        <div class="scanner-preview-placeholder" data-preview-placeholder>
+        <span class="scanner-preview-icon" aria-hidden="true">🍃</span>
+          <strong data-i18n="scanner.preview.empty">स्वच्छ पानाच्या फोटोसाठी तयार</strong>
+          <p class="hint" data-i18n="scanner.preview.caption">कॅमेरा वापरा किंवा स्पष्ट फोटो अपलोड करून पुढे जा.</p>
+        </div>
+        <span class="camera-status ready" data-scanner-status
+              data-i18n="scanner.status">कॅमेरा तयार आहे...</span>
+        <a href="{{ url_for('scan_tutorial') }}"
+           class="info-icon"
+           data-i18n-aria="scanner.tutorial"
+           data-i18n-title="scanner.tutorial"
+           tabindex="0">ℹ</a>
+      </div>
+
+      <!-- Hint under preview -->
+      <p class="preview-footer">
+        <span class="hint" data-i18n="scanner.hint">टीप: एकाच पानावर लक्ष केंद्रित ठेवा.</span>
+      </p>
+
+      <div class="scanner-file-card">
+        <div>
+          <p class="label" data-i18n="scanner.file.label">निवडलेला फोटो</p>
+          <strong data-scanner-file-name data-i18n="scanner.file.empty">अजून फोटो निवडलेला नाही.</strong>
+          <p class="hint" data-scanner-file-meta data-i18n="scanner.file.meta.empty">JPEG, PNG किंवा WEBP, कमाल 2MB.</p>
+        </div>
+        <button type="button" class="pill ghost sm" data-clear-selection data-i18n="scanner.file.clear">साफ करा</button>
+      </div>
+
+      <!-- Action buttons -->
+      <div>
+        <p class="scanner-actions-label" style="margin-bottom:var(--sp-3);">
+          <span class="hint" data-i18n="scanner.actions.label">फोटो कसा जोडायचा ते निवडा</span>
+        </p>
+        <div class="scanner-actions">
+          <button type="button" class="circle-btn" data-camera-capture
+                  data-i18n-aria="scanner.button.capture"
+                  data-i18n-title="scanner.button.capture">📷</button>
+          <button type="button" class="circle-btn" data-camera-gallery
+                  data-i18n-aria="scanner.button.upload"
+                  data-i18n-title="scanner.button.upload">🖼</button>
+          <button type="submit" class="pill primary" data-analyze-btn disabled>
+            <span data-i18n="scanner.button.analyze">विश्लेषण सुरू करा</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hidden file input -->
+      <input id="scannerInput" name="img" type="file" accept="image/*" hidden />
+
+      <!-- Upload note -->
+      <p class="hint" style="text-align:center;" data-i18n="scanner.upload.hint">
+        JPEG/PNG · कमाल 2 MB
+      </p>
+
+      <!-- Scan guide link -->
+      <div class="scan-guide">
+        <a class="pill ghost sm" href="{{ url_for('scan_tutorial') }}"
+           data-i18n="scanner.tutorial">स्कॅन मार्गदर्शक उघडा</a>
+      </div>
+    </form>
+
+  </article>
+
+  <aside class="glass-card scanner-side-card">
+    <header class="card-header">
+      <div>
+        <p class="page-eyebrow" data-i18n="scanner.support.title">स्कॅन सहाय्य</p>
+        <h2 class="page-title" data-i18n="scanner.support.subtitle">अधिक स्वच्छ निदानाची शक्यता वाढवा.</h2>
+      </div>
+    </header>
+
+    <div class="support-grid">
+      <article class="support-tile">
+        <span class="support-icon" aria-hidden="true">📸</span>
+        <h3 data-i18n="scanner.support.tip1.title">एक पान, एक फ्रेम</h3>
+        <p data-i18n="scanner.support.tip1.body">एका प्रतिमेत अनेक पाने, हात किंवा मातीचा गोंधळ टाळा.</p>
+      </article>
+      <article class="support-tile">
+        <span class="support-icon" aria-hidden="true">☀️</span>
+        <h3 data-i18n="scanner.support.tip2.title">मऊ नैसर्गिक प्रकाश वापरा</h3>
+        <p data-i18n="scanner.support.tip2.body">फ्लॅशपेक्षा नैसर्गिक प्रकाश डाग, ठिपके आणि रंगबदल चांगले दाखवतो.</p>
+      </article>
+      <article class="support-tile">
+        <span class="support-icon" aria-hidden="true">🧾</span>
+        <h3 data-i18n="scanner.support.tip3.title">उपयुक्त स्कॅन जतन करा</h3>
+        <p data-i18n="scanner.support.tip3.body">चांगले स्कॅन नंतर इतिहासात तुलना करता येणारे अहवाल बनतात.</p>
+      </article>
+    </div>
+
+    <div class="scanner-support-block">
+      <div class="support-row">
+        <span class="label" data-i18n="scanner.support.coverage">कव्हरेज</span>
+        <span class="hint" data-i18n="scanner.support.coverage.detail">सध्याचे मॉडेल बागायती, शेत आणि भाजीपाला पिके ओळखते.</span>
+      </div>
+      <div class="soft-chip-row">
+        {% for crop in supported_crops %}
+          <span class="soft-chip">{{ crop }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="scanner-support-block">
+      <div class="support-row">
+        <span class="label" data-i18n="scanner.support.privacy">कार्यप्रवाह नोंद</span>
+        <span class="hint" data-i18n="scanner.support.privacy.detail">प्रतिमा अॅपच्या प्रवाहातच राहते आणि यशस्वी निष्कर्षच अहवाल म्हणून जतन होतो.</span>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<script type="module">
+  import { initScannerPage } from "{{ url_for('static', filename='js/camera.js') }}";
+  document.addEventListener('DOMContentLoaded', initScannerPage);
+</script>
+{% endblock %}

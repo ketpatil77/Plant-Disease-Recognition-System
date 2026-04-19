@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="settings-layout">
+  <article class="glass-card settings-card">
+
+    <!-- Page header -->
+    <header>
+      <p class="page-eyebrow" data-i18n="settings.title">सेटिंग्ज</p>
+      <h1 data-i18n="settings.heading">तुमचा अनुभव सानुकूलित करा</h1>
+    </header>
+
+    <!-- Language -->
+    <div class="settings-group">
+      <h2 data-i18n="settings.language">भाषा</h2>
+      <p data-i18n="settings.language.hint">अॅप इंटरफेससाठी भाषा निवडा.</p>
+      <div class="toggle-row">
+        <label class="toggle-option">
+          <input type="radio" name="user-language" value="mr" data-lang-option />
+          <span data-i18n="settings.language.marathi">मराठी</span>
+        </label>
+        <label class="toggle-option">
+          <input type="radio" name="user-language" value="en" data-lang-option />
+          <span data-i18n="settings.language.english">इंग्रजी</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Theme -->
+    <div class="settings-group">
+      <h2 data-i18n="settings.theme">थीम</h2>
+      <p data-i18n="settings.theme.info">लाईट आणि डार्क मोडमध्ये बदला.</p>
+      <button type="button" class="pill primary" data-theme-toggle
+              data-i18n="settings.theme.toggle">थीम बदला</button>
+    </div>
+
+    <!-- Data -->
+    <div class="settings-group">
+      <h2 data-i18n="settings.data">डेटा आणि कॅश</h2>
+      <p data-i18n="settings.data.info">स्थानिक प्राधान्ये आणि जतन केलेला डेटा साफ करा.</p>
+      <button type="button" class="pill secondary" id="clearStorage"
+              data-i18n="settings.data.clear">कॅश साफ करा</button>
+    </div>
+
+    <!-- Diagnostics -->
+    <div class="settings-group">
+      <h2 data-i18n="settings.diagnostics">निदान</h2>
+      <ul class="diagnostics-list">
+        <li>
+          <span aria-hidden="true">📷</span>
+          <span data-i18n="settings.diagnostics.camera">कॅमेरा</span>
+          <span data-diagnostic-camera data-i18n="settings.diagnostics.checking">तपासत आहे...</span>
+        </li>
+        <li>
+          <span aria-hidden="true">🎤</span>
+          <span data-i18n="settings.diagnostics.mic">मायक्रोफोन</span>
+          <span data-diagnostic-mic data-i18n="settings.diagnostics.checking">तपासत आहे...</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Help -->
+    <div class="settings-group" id="help">
+      <h2 data-i18n="settings.help">मदत आणि सहाय्य</h2>
+      <div class="settings-accordion">
+        <details>
+          <summary data-i18n="settings.help.answer1">चांगले फोटो कसे घ्यायचे?</summary>
+          <p data-i18n="settings.help.answer1.detail">नैसर्गिक प्रकाश वापरा, हात स्थिर ठेवा आणि फ्रेममध्ये एकच पान ठेवा.</p>
+        </details>
+        <details>
+          <summary data-i18n="settings.help.answer2">भविष्यवाणी चुकीची का येऊ शकते?</summary>
+          <p data-i18n="settings.help.answer2.detail">धूसर फोटो, एकमेकांवर आलेली पाने किंवा कमी प्रकाश मॉडेलला चुकीची दिशा देऊ शकतात.</p>
+        </details>
+        <details>
+          <summary data-i18n="settings.help.contact">संपर्क / अभिप्राय</summary>
+          <p>
+            <span data-i18n="settings.help.contact.detail">ईमेल</span>
+            <a href="mailto:support@agrovision.app" style="color:var(--accent-primary);">support@agrovision.app</a>
+          </p>
+        </details>
+      </div>
+    </div>
+
+  </article>
+</section>
+
+<!-- Confirm modal — fully CSS-variable themed -->
+<div id="confirmModal"
+     role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle"
+     style="display:none; position:fixed; inset:0;
+            background:rgba(0,0,0,0.55); backdrop-filter:blur(4px);
+            align-items:center; justify-content:center; z-index:9999;">
+  <div style="
+    background: var(--bg-raised);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-8) var(--sp-6);
+    max-width: 400px; width: 90%;
+    box-shadow: var(--shadow-xl);
+  ">
+    <h2 id="confirmModalTitle" style="
+      font-size: var(--text-lg); font-weight: 700;
+      margin: 0 0 var(--sp-2); color: var(--text-primary);"
+      data-i18n="settings.confirm_clear">सर्व प्राधान्ये साफ करायची का?</h2>
+    <p style="
+      font-size: var(--text-sm); color: var(--text-secondary);
+      margin: 0 0 var(--sp-6);"
+      data-i18n="settings.confirm_clear_message">ही कृती पूर्ववत करता येणार नाही.</p>
+    <div style="display:flex; gap:var(--sp-2); justify-content:flex-end;">
+      <button id="confirmCancel" class="pill ghost" data-i18n="settings.button_cancel">रद्द करा</button>
+      <button id="confirmOk"     class="pill danger" data-i18n="settings.button_clear">साफ करा</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* Diagnostics */
+  var diagCamera = document.querySelector('[data-diagnostic-camera]');
+  var diagMic    = document.querySelector('[data-diagnostic-mic]');
+  var _diagState = { camera: null, mic: null };
+  function setDiagnosticText(el, key, ok) {
+    if (!el) return;
+    var apply = function (text) {
+      el.textContent = text;
+      el.style.color = ok === true ? 'var(--success-text)' : ok === false ? 'var(--danger-text)' : 'var(--warning-text)';
+    };
+    if (typeof window.getTranslation === 'function') {
+      window.getTranslation(key).then(apply).catch(function () { apply(key); });
+    } else {
+      apply(key);
+    }
+  }
+  function applyDiagnosticsState() {
+    if (_diagState.camera) setDiagnosticText(diagCamera, _diagState.camera.key, _diagState.camera.ok);
+    if (_diagState.mic) setDiagnosticText(diagMic, _diagState.mic.key, _diagState.mic.ok);
+  }
+  if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+    navigator.mediaDevices.enumerateDevices().then(function (devices) {
+      var hasCamera = devices.some(function (d) { return d.kind === 'videoinput'; });
+      var hasMic    = devices.some(function (d) { return d.kind === 'audioinput'; });
+      _diagState.camera = { key: hasCamera ? 'settings.diagnostics.available' : 'settings.diagnostics.not_found', ok: hasCamera };
+      _diagState.mic = { key: hasMic ? 'settings.diagnostics.available' : 'settings.diagnostics.not_found', ok: hasMic };
+      applyDiagnosticsState();
+    }).catch(function () {
+      _diagState.camera = { key: 'settings.diagnostics.permissions', ok: null };
+      _diagState.mic = { key: 'settings.diagnostics.permissions', ok: null };
+      applyDiagnosticsState();
+    });
+  }
+  document.addEventListener('agro:languagechange', applyDiagnosticsState);
+
+  /* Clear cache confirm */
+  var modal     = document.getElementById('confirmModal');
+  var cancelBtn = document.getElementById('confirmCancel');
+  var okBtn     = document.getElementById('confirmOk');
+
+  function showModal() { modal.style.display = 'flex'; setTimeout(function () { cancelBtn.focus(); }, 50); }
+  function hideModal() { modal.style.display = 'none'; }
+
+  document.getElementById('clearStorage')?.addEventListener('click', showModal);
+  cancelBtn?.addEventListener('click', hideModal);
+  modal?.addEventListener('click', function (e) { if (e.target === modal) hideModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.style.display === 'flex') hideModal(); });
+
+  okBtn?.addEventListener('click', async function () {
+    hideModal();
+    localStorage.removeItem('agro-theme');
+    localStorage.removeItem('agro-lang');
+    var msg = (typeof window.getTranslation === 'function')
+      ? await window.getTranslation('settings.confirm_clear_success')
+      : 'Preferences cleared. Reloading…';
+    window.showToast && window.showToast('success', msg, 1200);
+    setTimeout(function () { window.location.reload(); }, 900);
+  });
+</script>
+{% endblock %}

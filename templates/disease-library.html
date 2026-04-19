@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="library-layout">
+
+  <article class="glass-card library-summary-card">
+    <header class="card-header">
+      <div>
+        <p class="page-eyebrow" data-i18n="library.summary.title">संदर्भ ग्रंथालय</p>
+        <h1 class="page-title" data-i18n="library.summary.subtitle">एका ठिकाणी पीक लक्षणे, कारणे आणि उपचार मार्गदर्शन पाहा.</h1>
+      </div>
+    </header>
+    <div class="metric-grid compact">
+      <article class="metric-tile">
+        <strong>{{ library_summary.item_count }}</strong>
+        <span class="label" data-i18n="library.summary.items">रोग नोंदी</span>
+        <p class="hint" data-i18n="library.summary.items.detail">भविष्यवाणी प्रक्रियेत वापरलेले त्याच पीक आणि रोग लेबल शोधा.</p>
+      </article>
+      <article class="metric-tile">
+        <strong>{{ library_summary.crop_count }}</strong>
+        <span class="label" data-i18n="library.summary.crops">पीक गट</span>
+        <p class="hint" data-i18n="library.summary.crops.detail">जलद जुळणीसाठी प्रथम पीक फिल्टर वापरा.</p>
+      </article>
+      <article class="metric-tile">
+        <strong>{{ library_summary.healthy_count }}</strong>
+        <span class="label" data-i18n="library.summary.healthy">निरोगी संदर्भ</span>
+        <p class="hint" data-i18n="library.summary.healthy.detail">निरोगी नमुने सुरुवातीच्या लक्षणांपासून सामान्य पाने वेगळी ओळखण्यास मदत करतात.</p>
+      </article>
+    </div>
+  </article>
+
+  <!-- Filter / search card -->
+  <article class="glass-card library-filter-card">
+    <header>
+      <p class="page-eyebrow" data-i18n="library.title">रोग ग्रंथालय</p>
+      <h1 data-i18n="library.heading">पीक आणि रोग शोधा</h1>
+    </header>
+    <div class="library-controls">
+      <!-- Search input -->
+      <label class="sr-only" for="librarySearch" data-i18n="library.search.label">रोग शोधा</label>
+      <div class="library-search-wrapper">
+        <span class="library-search-icon" aria-hidden="true">🔍</span>
+        <input id="librarySearch"
+               type="search"
+               data-library-search
+               autocomplete="off"
+               autocorrect="off"
+               spellcheck="false"
+               data-i18n-placeholder="library.search.placeholder"
+               data-i18n-aria="library.search.label"
+               placeholder="रोग शोधा..." />
+      </div>
+
+      <!-- Crop filter -->
+      <label class="sr-only" for="libraryCrop" data-i18n="library.crop.label">पीक फिल्टर</label>
+      <select id="libraryCrop" data-library-crop>
+        <option value="" data-i18n="library.crop.all">सर्व पिके</option>
+        {% for crop in crop_filters %}
+          <option value="{{ crop }}">{{ crop }}</option>
+        {% endfor %}
+      </select>
+
+      <span class="result-count" data-library-count>{{ items|length }} नोंदी</span>
+    </div>
+  </article>
+
+  <!-- Disease cards -->
+  <section class="library-grid" role="list" data-i18n-aria="library.aria.list">
+    {% for item in items %}
+      <article class="library-card" role="listitem"
+               data-crop="{{ item.crop }}"
+               data-disease="{{ item.disease }}">
+        <div class="card-head">
+          <span class="soft-chip">{{ item.crop }}</span>
+          <h3>{{ item.disease }}</h3>
+        </div>
+        <p class="card-desc">{{ item.description }}</p>
+        <details>
+          <summary data-i18n="library.more">अधिक तपशील</summary>
+          <p>{{ item.remedy }}</p>
+        </details>
+      </article>
+    {% endfor %}
+  </section>
+
+  <!-- Empty state when filter returns nothing -->
+  <p class="empty" id="libraryEmpty" hidden data-i18n="library.empty">
+    कोणतेही निकाल सापडले नाहीत.
+  </p>
+
+</section>
+
+<script>
+  var searchInput  = document.querySelector('[data-library-search]');
+  var cropSelect   = document.querySelector('[data-library-crop]');
+  var cards        = Array.from(document.querySelectorAll('.library-card'));
+  var emptyMessage = document.getElementById('libraryEmpty');
+  var countLabel   = document.querySelector('[data-library-count]');
+
+  function filterCards() {
+    var text = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    var crop = cropSelect  ? cropSelect.value : '';
+    var visible = 0;
+    cards.forEach(function (card) {
+      var matchText = !text
+        || card.dataset.disease.toLowerCase().includes(text)
+        || card.dataset.crop.toLowerCase().includes(text);
+      var matchCrop = !crop || card.dataset.crop === crop;
+      var show = matchText && matchCrop;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    if (emptyMessage) emptyMessage.hidden = visible > 0;
+    if (countLabel) {
+      var fallback = visible + ' entries';
+      if (typeof window.getTranslation === 'function') {
+        window.getTranslation('library.result_count').then(function (template) {
+          countLabel.textContent = (template || '{count} entries').replace('{count}', visible);
+        }).catch(function () {
+          countLabel.textContent = fallback;
+        });
+      } else {
+        countLabel.textContent = fallback;
+      }
+    }
+  }
+
+  if (searchInput) searchInput.addEventListener('input', filterCards);
+  if (cropSelect)  cropSelect.addEventListener('change', filterCards);
+  document.addEventListener('agro:languagechange', filterCards);
+  filterCards();
+</script>
+{% endblock %}

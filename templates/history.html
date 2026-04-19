@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="history-layout">
+
+  <article class="glass-card history-summary-card">
+    <div class="metric-grid compact">
+      <article class="metric-tile">
+        <strong>{{ history_summary.total_reports }}</strong>
+        <span class="label" data-i18n="history.summary.total">एकूण अहवाल</span>
+        <p class="hint" data-i18n="history.summary.total.detail">प्रत्येक पुष्टी झालेलं निदान पुढील पाहणीसाठी उपलब्ध राहते.</p>
+      </article>
+      <article class="metric-tile">
+        <strong>{{ history_summary.high_priority }}</strong>
+        <span class="label" data-i18n="history.summary.high">उच्च प्राधान्य</span>
+        <p class="hint" data-i18n="history.summary.high.detail">त्वरित रोगदाब असलेल्या अहवालांवर प्रथम कृती करा.</p>
+      </article>
+      <article class="metric-tile">
+        <strong>{{ history_summary.average_confidence }}%</strong>
+        <span class="label" data-i18n="history.summary.confidence">सरासरी विश्वास</span>
+        <p class="hint" data-i18n="history.summary.confidence.detail">कमी प्रतीच्या किंवा अर्धवट फोटोमधील अहवाल पुन्हा स्कॅन करा.</p>
+      </article>
+      <article class="metric-tile">
+        <strong>{{ history_summary.latest_at or '—' }}</strong>
+        <span class="label" data-i18n="history.summary.latest">सर्वात अलीकडील जतन</span>
+        <p class="hint">{{ history_summary.latest_disease or 'अजून स्कॅन उपलब्ध नाही.' }}</p>
+      </article>
+    </div>
+  </article>
+
+  <!-- Filter card -->
+  <article class="glass-card history-filter-card">
+    <header>
+      <p class="page-eyebrow" data-i18n="history.title">माझे अहवाल</p>
+      <h1 data-i18n="history.heading">तुमचे स्कॅन ट्रॅक करा</h1>
+    </header>
+    <div class="filter-row">
+      <label class="sr-only" for="historySearch" data-i18n="history.filter.search">अहवाल शोधा</label>
+      <div class="library-search-wrapper history-search">
+        <span class="library-search-icon" aria-hidden="true">🔍</span>
+        <input id="historySearch"
+               type="search"
+               data-history-search
+               autocomplete="off"
+               autocorrect="off"
+               spellcheck="false"
+               data-i18n-placeholder="history.filter.search_placeholder"
+               data-i18n-aria="history.filter.search"
+               placeholder="पीक किंवा रोगानुसार शोधा" />
+      </div>
+
+      <label class="sr-only" for="historyDate" data-i18n="history.filter.date">दिनांक श्रेणी</label>
+      <select id="historyDate" data-history-date>
+        <option value="all"  data-i18n="history.filter.all">सर्व कालावधी</option>
+        <option value="7"    data-i18n="history.filter.7">शेवटचे 7 दिवस</option>
+        <option value="30"   data-i18n="history.filter.30">शेवटचे 30 दिवस</option>
+      </select>
+
+      <label class="sr-only" for="historyCrop" data-i18n="history.filter.crop">पीक</label>
+      <select id="historyCrop" data-history-crop>
+        <option value="" data-i18n="history.filter.crop_all">सर्व पिके</option>
+        {% for crop in filter_crops %}
+          <option value="{{ crop }}">{{ crop }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </article>
+
+  {% if reports %}
+    <div class="history-grid" data-history-list role="list" data-i18n-aria="history.aria.list">
+      {% for report in reports %}
+        <article class="history-card" role="listitem"
+                 data-report-date="{{ report.created_at.isoformat() if report.created_at else '' }}"
+                 data-report-crop="{{ report.crop }}"
+                 data-report-disease="{{ report.disease }}">
+
+          <div class="history-main">
+            <p class="report-time">{{ report.created_at_display or '—' }}</p>
+            <h3>{{ report.crop }}</h3>
+            <p class="history-disease">{{ report.disease }}</p>
+          </div>
+
+          <div class="history-meta">
+            <span class="badge badge-severity-{{ (report.severity or 'medium')|lower }}">
+              <span data-history-severity-label data-severity="{{ (report.severity or 'medium')|lower }}">
+              {{ 'उच्च' if (report.severity or 'medium')|lower == 'high' else 'कमी' if (report.severity or 'medium')|lower == 'low' else 'मध्यम' }}
+              </span>
+            </span>
+            <span class="confidence">{{ report.confidence }}%</span>
+          </div>
+
+          <div class="history-actions">
+            <a class="action-link" href="{{ url_for('view_report', report_id=report.id) }}"
+               data-i18n="history.actions.view">पाहा</a>
+            <a class="action-link" href="{{ url_for('history_download', report_id=report.id) }}"
+               data-i18n="history.actions.download">PDF</a>
+            <form method="POST" action="{{ url_for('history_delete', report_id=report.id) }}" style="margin:0;">
+              <button type="button" class="action-link danger" data-confirm-delete
+                      data-i18n="history.actions.delete">हटवा</button>
+            </form>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <p class="empty" id="historyEmpty" hidden data-i18n="history.empty.filtered">
+      या फिल्टरसाठी कोणतेही अहवाल सापडले नाहीत.
+    </p>
+
+  {% else %}
+    <article class="glass-card empty-state">
+      <span class="empty-icon">📂</span>
+      <p data-i18n="history.empty">अजून अहवाल नाहीत. स्कॅन सुरू करा.</p>
+      <a class="pill primary" href="{{ url_for('scanner') }}" data-i18n="history.empty.cta">आता स्कॅन करा</a>
+    </article>
+  {% endif %}
+
+</section>
+
+<script>
+  async function applyHistorySeverityLabels() {
+    if (typeof window.getTranslation !== 'function') return;
+    var nodes = document.querySelectorAll('[data-history-severity-label]');
+    for (const node of nodes) {
+      var severity = (node.dataset.severity || '').toLowerCase();
+      if (!severity) continue;
+      node.textContent = await window.getTranslation(`common.level.${severity}`);
+    }
+  }
+
+  document.querySelectorAll('[data-confirm-delete]').forEach(function (btn) {
+    btn.addEventListener('click', async function () {
+      var form = btn.closest('form');
+      if (!form) return;
+      var message = 'Delete this report? This cannot be undone.';
+      if (typeof window.getTranslation === 'function') {
+        message = await window.getTranslation('history.confirm_delete');
+      }
+      var ok = confirm(message);
+      if (ok) form.submit();
+    });
+  });
+
+  applyHistorySeverityLabels();
+  document.addEventListener('agro:languagechange', applyHistorySeverityLabels);
+</script>
+<script type="module">
+  import { setupHistoryFilters } from "{{ url_for('static', filename='js/history.js') }}";
+  import { populateOfflineHistory } from "{{ url_for('static', filename='js/offline.js') }}";
+  setupHistoryFilters({ emptyId: 'historyEmpty' });
+  populateOfflineHistory('[data-history-list]');
+</script>
+{% endblock %}

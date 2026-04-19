@@ -1,0 +1,6 @@
+Flask==3.0.0
+gTTS==2.5.1
+numpy>=1.26.0,<2
+Pillow==10.1.0
+torch==2.2.2
+torchvision==0.17.2
