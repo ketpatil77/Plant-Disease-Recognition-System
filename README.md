@@ -1,67 +1,77 @@
-# Agro-Vision
+# Plant Disease Recognition System
 
-AI-assisted plant disease recognition project focused on image-based crop health assessment.
+Farmer-oriented Flask and PyTorch application for crop disease detection, local guidance, and report generation. Built for practical use with image upload, prediction flow, Marathi-ready UX, weather context, and offline-friendly startup path.
 
-## Overview
+## What It Does
 
-This repository contains a plant disease recognition system designed to support faster identification of crop health issues from plant imagery. The project is suitable for academic demonstration, applied AI experimentation, and early-stage AgriTech workflows where image-based classification can assist farmers, students, and developers.
+- Accepts plant leaf images and runs disease prediction through local model inference.
+- Returns disease label, confidence, and guidance for next action.
+- Adds local weather context and market-oriented support data.
+- Generates downloadable reports for field use and follow-up.
+- Supports simple Windows startup through `START.bat`.
 
-## Goals
+## Core Stack
 
-- Classify plant diseases from image inputs
-- Support agricultural decision-making with faster visual diagnosis
-- Demonstrate applied machine learning for crop health monitoring
-- Provide a base project for experimentation, extension, and deployment
+- Python
+- Flask
+- PyTorch
+- Pillow
+- NumPy
 
-## Suggested Use Cases
-
-- Academic AI/ML demonstrations
-- Crop disease screening prototypes
-- AgriTech product experimentation
-- Computer vision learning projects
-
-## Repository Improvement Notes
-
-This README has been added to improve project clarity and public presentation. The next recommended upgrades for this repository are:
-
-- Add dataset information and source details
-- Document model architecture and training approach
-- Include setup and inference instructions
-- Add sample screenshots or prediction examples
-- Provide evaluation metrics only if they are verified
-- Add a license if you want reuse to be clearly permitted
-
-## Recommended Project Structure
+## Project Structure
 
 ```text
-.
-├── data/                # Dataset or sample assets
-├── models/              # Saved model files or checkpoints
-├── notebooks/           # Experiments and training notebooks
-├── src/                 # Application or training code
-├── requirements.txt     # Python dependencies
-└── README.md
+Plant-Disease-Recognition-System/
+  app.py
+  backend/
+  models/
+  static/
+  templates/
+  uploadimages/
+  START.bat
+  requirements.txt
 ```
 
-## Quick Start Template
+## Run Locally
 
-Update this section to match the actual code in the repository.
+Requirements:
+
+- Python 3
+- Model file at `models/plant_disease_model_1_latest.pt`
+
+Install dependencies:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
-python main.py
 ```
 
-## Roadmap
+Start app:
 
-- Add reproducible training instructions
-- Add prediction workflow documentation
-- Add screenshots and sample outputs
-- Add deployment notes
-- Add model performance summary
+```bat
+START.bat
+```
 
-## Disclaimer
+Manual fallback:
 
-This repository should not be used as a substitute for expert agricultural diagnosis unless the model, dataset, and validation process have been rigorously documented and verified.
+```bash
+python app.py
+```
+
+Default local URL:
+
+```text
+http://127.0.0.1:5000
+```
+
+## Product Value
+
+- Turns raw model output into usable guidance for farmers.
+- Keeps workflow simple for local laptop deployment.
+- Extends disease prediction with weather and report context instead of one-screen classification only.
+
+## Current Repo Notes
+
+- Main entrypoint: `app.py`
+- Startup helper: `START.bat`
+- Inference and service logic: `backend/`
+- Model asset expected locally; repo does not auto-download it
