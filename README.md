@@ -10,6 +10,10 @@ Farmer-oriented Flask and PyTorch application for crop disease detection, local 
 - Generates downloadable reports for field use and follow-up.
 - Supports simple Windows startup through `START.bat`.
 
+## Documentation
+
+- [Architecture overview](docs/architecture.md)
+
 ## Core Stack
 
 - Python
